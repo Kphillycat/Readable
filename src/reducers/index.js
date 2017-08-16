@@ -25,13 +25,23 @@ export const Categories = (state = initialCategoryState, action) => {
 
 const initialPostsState = [
   {
-    id: '',
-    timestamp: '',
-    title: '',
-    body: '',
-    author: '',
-    category: '',
+    id: '0',
+    timestamp: Date.now(),
+    title: 'TEST TITLE',
+    body: 'Chupa chups liquorice tootsie roll jelly-o marshmallow pastry bonbon pie. Toffee carrot cake caramels. Chocolate ice cream tiramisu cheesecake macaroon jujubes brownie croissant. Apple pie marshmallow lemon drops bear claw carrot cake brownie marzipan oat cake chupa chups. Candy canes jelly muffin gummies pastry sweet roll bear claw bear claw. Cake sugar plum cotton candy cupcake. Bear claw sugar plum carrot cake jujubes. Pie fruitcake gingerbread. Cake cake marzipan. Croissant sugar plum sesame snaps ice cream marshmallow cake chocolate cake chocolate bar apple pie. Tootsie roll icing jelly beans dessert toffee chocolate cake apple pie fruitcake. Marshmallow soufflé tart tiramisu. Candy canes cake halvah candy topping.',
+    author: 'ME',
+    category: 'redux',
     voteScore: 1,
+    deleted: false
+  },
+  {
+    id: '1',
+    timestamp: Date.now(),
+    title: 'TEST TITLE 2',
+    body: 'Fruitcake tart cotton candy cake donut lemon drops marzipan liquorice soufflé. Halvah ice cream sweet pastry toffee biscuit candy canes marshmallow. Lollipop cake brownie chocolate cake danish muffin. Soufflé chocolate cake topping toffee. Chocolate cake danish cookie jelly beans cheesecake powder chupa chups.',
+    author: 'ME',
+    category: 'redux',
+    voteScore: 2,
     deleted: false
   }
 ];
