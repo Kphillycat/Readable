@@ -1,3 +1,5 @@
+import * as actions from '../actions';
+
 const initialCategoryState = [
     {
       name: 'react',
@@ -26,7 +28,7 @@ export const categories = (state = initialCategoryState, action) => {
 const initialPostsState = [
   {
     id: '0',
-    timestamp: Date.now('1/1/1990'),
+    timestamp: Number(new Date('1/1/1990')),
     title: 'TEST TITLE',
     body: 'Chupa chups liquorice tootsie roll jelly-o marshmallow pastry bonbon pie. Toffee carrot cake caramels. Chocolate ice cream tiramisu cheesecake macaroon jujubes brownie croissant. Apple pie marshmallow lemon drops bear claw carrot cake brownie marzipan oat cake chupa chups. Candy canes jelly muffin gummies pastry sweet roll bear claw bear claw. Cake sugar plum cotton candy cupcake. Bear claw sugar plum carrot cake jujubes. Pie fruitcake gingerbread. Cake cake marzipan. Croissant sugar plum sesame snaps ice cream marshmallow cake chocolate cake chocolate bar apple pie. Tootsie roll icing jelly beans dessert toffee chocolate cake apple pie fruitcake. Marshmallow soufflé tart tiramisu. Candy canes cake halvah candy topping.',
     author: 'ME',
@@ -51,6 +53,8 @@ export const posts = (state = initialPostsState, action) => {
     case 'GET_POST':
       return state;
       break;
+    case actions.RECEIVED_POSTS:
+      return [...state, ...action.posts];
     default:
       return state;
   }

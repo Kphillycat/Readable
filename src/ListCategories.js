@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import orderBy from 'lodash.orderby';
 import PostForm from './PostForm.js'
+import * as actions from './actions';
 
 class ListCategories extends Component {
   state = {
@@ -11,27 +12,32 @@ class ListCategories extends Component {
   };
 
   componentDidMount(){
+    this.props.dispatch(actions.fetchPosts());
     this.orderPosts();
   }
 
-  orderPosts(byKey = this.state.sortByKey) {
+  componentWillReceiveProps(nextProps){
+    this.orderPosts(this.state.sortByKey, nextProps.state.posts);
+  }
+
+  orderPosts(byKey = this.state.sortByKey, posts = this.props.state.posts) {
     this.setState({
-      sortedPosts: orderBy(this.props.state.posts, [byKey], ['desc']),
+      sortedPosts: orderBy(posts, [byKey], ['desc']),
       sortByKey: byKey
     });
   }
 
   render() {
     console.log('this.props ',  this.props)
-    const { categories } = this.props.state;
+    const { categories, posts } = this.props.state;
     const { sortedPosts, sortByKey } = this.state;
 
     return (
       <div>
         {/* Sort Control */}
-        <select name="sort-order" value={sortByKey} onChange={(e) => {this.orderPosts(e.target.value)}}>
+        <select name="sort-order" value={sortByKey} onChange={(e) => {this.orderPosts(e.target.value, posts)}}>
           <option value="voteScore">Vote Score</option>
-          <option value="timeStamp">Time</option>
+          <option value="timestamp">Time</option>
         </select>
 
         {/* List categories */}
@@ -59,6 +65,9 @@ class ListCategories extends Component {
               </p>
               <p>
                 Votes: {post.voteScore}
+              </p>
+              <p>
+                Date: {new Date(post.timestamp).toString()}
               </p>
             </div>
 

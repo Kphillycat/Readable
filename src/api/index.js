@@ -1,4 +1,5 @@
-const endpoint = "http://localhost:3000";
+const port = "5001";
+const endpoint = `http://localhost:${port}`;
 
 const headers = {
   Authorization: 'boomshakalaka'
@@ -28,7 +29,7 @@ owner - String
 category: Any of the categories listed in categories.js. Feel free to extend this list as you desire.
 ***/
 export const addPost = (params) =>
-  fetch(`${api}/posts`, {
+  fetch(`${endpoint}/posts`, {
     method: 'POST',
     headers: {
       ...headers,
@@ -47,7 +48,7 @@ export const getPostsById = (id) =>
 params: option - String: Either "upVote" or "downVote"
 ***/
 export const votePost = (params, id) =>
-  fetch(`${api}/posts/${id}`, {
+  fetch(`${endpoint}/posts/${id}`, {
     method: 'POST',
     headers: {
       ...headers,
@@ -63,7 +64,7 @@ params:
   body - String
 ***/
 export const editPost = (params, id) =>
-  fetch(`${api}/posts/${id}`, {
+  fetch(`${endpoint}/posts/${id}`, {
     method: 'PUT',
     headers: {
       ...headers,
@@ -74,7 +75,7 @@ export const editPost = (params, id) =>
     .then(data => data)
 
 export const deletePost = (params, id) =>
-  fetch(`${api}/posts/${id}`, {
+  fetch(`${endpoint}/posts/${id}`, {
     method: 'DELETE',
     headers: {
       ...headers,
@@ -98,7 +99,7 @@ owner: String
 parentId: Should match a post id in the database.
 **/
 export const addComment = (params) =>
-  fetch(`${api}/comment`, {
+  fetch(`${endpoint}/comment`, {
     method: 'POST',
     headers: {
       ...headers,
@@ -119,8 +120,8 @@ params:
 timestamp: timestamp. Get this however you want.
 body: String
 **/
-export const addComment = (params, id) =>
-  fetch(`${api}/comments/${id}`, {
+export const voteOnComment = (params, id) =>
+  fetch(`${endpoint}/comments/${id}`, {
     method: 'POST',
     headers: {
       ...headers,
@@ -131,7 +132,7 @@ export const addComment = (params, id) =>
     .then(data => data)
 
 export const editComment = (params, id) =>
-  fetch(`${api}/comments/${id}`, {
+  fetch(`${endpoint}/comments/${id}`, {
     method: 'PUT',
     headers: {
       ...headers,
@@ -142,7 +143,7 @@ export const editComment = (params, id) =>
     .then(data => data)
 
 export const deleteComment = (params, id) =>
-  fetch(`${api}/comments/${id}`, {
+  fetch(`${endpoint}/comments/${id}`, {
     method: 'DELETE',
     headers: {
       ...headers,
