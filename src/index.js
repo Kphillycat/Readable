@@ -5,10 +5,10 @@ import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 import { BrowserRouter } from 'react-router-dom';
 import { createStore, combineReducers } from 'redux';
-import { Categories, Posts, Comments } from './reducers/index.js';
+import { categories, posts, comments } from './reducers/index.js';
 import { Provider } from 'react-redux';
 
-const rootReducer = combineReducers({Categories, Posts, Comments});
+const rootReducer = combineReducers({categories, posts, comments});
 
 let store = createStore(rootReducer);
 

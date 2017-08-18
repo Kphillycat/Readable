@@ -2,27 +2,34 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import orderBy from 'lodash.orderby';
+import PostForm from './PostForm.js'
 
 class ListCategories extends Component {
   state = {
-    sortedPosts: []
+    sortedPosts: [],
+    sortByKey: 'voteScore'
   };
 
   componentDidMount(){
+    this.orderPosts();
+  }
+
+  orderPosts(byKey = this.state.sortByKey) {
     this.setState({
-      sortedPosts: orderBy(this.props.state.Posts, ['voteScore'], ['desc'])
+      sortedPosts: orderBy(this.props.state.posts, [byKey], ['desc']),
+      sortByKey: byKey
     });
   }
 
   render() {
     console.log('this.props ',  this.props)
-    const { Categories, Posts, Comments } = this.props.state;
-    const { sortedPosts } = this.state;
+    const { categories } = this.props.state;
+    const { sortedPosts, sortByKey } = this.state;
 
     return (
       <div>
         {/* Sort Control */}
-        <select name="sort-order" value="voteScore" onChange={(e) => {console.log(e.target.value)}}>
+        <select name="sort-order" value={sortByKey} onChange={(e) => {this.orderPosts(e.target.value)}}>
           <option value="voteScore">Vote Score</option>
           <option value="timeStamp">Time</option>
         </select>
@@ -30,7 +37,7 @@ class ListCategories extends Component {
         {/* List categories */}
         <div>
           <ul>
-            {Categories.map((category) =>
+            {categories.map((category) =>
               <li key={category.path}><Link to={`/category/${category.path}`}>{category.name}, </Link></li>
               )
             }
@@ -57,6 +64,8 @@ class ListCategories extends Component {
 
           )}
         </div>
+        {/* Add Post */}
+        <PostForm categories={categories}/>
       </div>
     )
   }
