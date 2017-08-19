@@ -18,7 +18,7 @@ const initialCategoryState = [
 export const categories = (state = initialCategoryState, action) => {
   switch (action.type) {
     case 'SHOW_CATEGORY':
-      return state;
+      return action.category;
     default:
       return state;
   }
@@ -34,16 +34,6 @@ const initialPostsState = [
     category: 'redux',
     voteScore: 1,
     deleted: false
-  },
-  {
-    id: '1',
-    timestamp: Date.now(),
-    title: 'TEST TITLE 2',
-    body: 'Fruitcake tart cotton candy cake donut lemon drops marzipan liquorice soufflé. Halvah ice cream sweet pastry toffee biscuit candy canes marshmallow. Lollipop cake brownie chocolate cake danish muffin. Soufflé chocolate cake topping toffee. Chocolate cake danish cookie jelly beans cheesecake powder chupa chups.',
-    author: 'ME',
-    category: 'redux',
-    voteScore: 2,
-    deleted: false
   }
 ];
 
@@ -55,6 +45,8 @@ export const posts = (state = initialPostsState, action) => {
       return [...state, ...action.posts];
     case actions.ADD_POST_SUCCESS:
       return [...state, action.response];
+    case actions.FILTER_POSTS:
+      return action.posts;
     default:
       return state;
   }

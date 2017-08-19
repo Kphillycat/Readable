@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "lodash.every": "^4.6.0",
+    "lodash.get": "^4.4.2",
     "lodash.orderby": "^4.6.0",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",

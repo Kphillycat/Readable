@@ -5,22 +5,21 @@ import orderBy from 'lodash.orderby';
 import PostForm from './PostForm.js'
 import * as actions from './actions';
 
-class ListCategories extends Component {
+class PostsList extends Component {
   state = {
     sortedPosts: [],
     sortByKey: 'voteScore'
   };
 
   componentDidMount(){
-    this.props.dispatch(actions.fetchPosts());
     this.orderPosts();
   }
 
   componentWillReceiveProps(nextProps){
-    this.orderPosts(this.state.sortByKey, nextProps.state.posts);
+    this.orderPosts(this.state.sortByKey, nextProps.posts);
   }
 
-  orderPosts(byKey = this.state.sortByKey, posts = this.props.state.posts) {
+  orderPosts(byKey = this.state.sortByKey, posts = this.props.posts) {
     this.setState({
       sortedPosts: orderBy(posts, [byKey], ['desc']),
       sortByKey: byKey
@@ -32,8 +31,8 @@ class ListCategories extends Component {
   }
 
   render() {
-    console.log('this.props ',  this.props)
-    const { categories, posts } = this.props.state;
+    console.log('PostsList props ',  this.props)
+    const { categories, posts, category: visibleCategory } = this.props;
     const { sortedPosts, sortByKey } = this.state;
 
     return (
@@ -45,10 +44,18 @@ class ListCategories extends Component {
         </select>
 
         {/* List categories */}
+        <Link to="/">HOME</Link>
         <div>
           <ul>
             {categories.map((category) =>
-              <li key={category.path}><Link to={`/category/${category.path}`}>{category.name}, </Link></li>
+              <li key={category.path}>
+                { category.name === visibleCategory ?
+                  <span>{category.name}</span>
+                    :
+                  <Link to={`/category/${category.path}`}>{category.name}, </Link>
+                }
+
+                </li>
               )
             }
           </ul>
@@ -73,6 +80,9 @@ class ListCategories extends Component {
               <p>
                 Date: {new Date(post.timestamp).toString()}
               </p>
+              <p>
+                Category: {post.category}
+              </p>
             </div>
 
           )}
@@ -84,10 +94,5 @@ class ListCategories extends Component {
   }
 };
 
-function mapStateToProps(state) {
-  return {
-    state
-  }
-}
 
-export default connect(mapStateToProps)(ListCategories);
+export default connect()(PostsList);
