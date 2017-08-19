@@ -1,4 +1,19 @@
 import * as actions from '../actions';
+import orderBy from 'lodash.orderby';
+import { DEFAULT_SORT_KEY } from '../constants';
+
+const initialSortByKey = {
+  value: DEFAULT_SORT_KEY
+};
+
+export const sortByKey = (state = initialSortByKey, action) =>  {
+  switch(action.type) {
+    case actions.SORT_POSTS:
+      return action.sortByKey;
+    default:
+      return state;
+  }
+}
 
 const initialCategoryState = [
     {
@@ -24,6 +39,15 @@ export const categories = (state = initialCategoryState, action) => {
   }
 };
 
+export const visibleCategory = (state = 'all', action) => {
+  switch(action.type) {
+    case 'SHOW_CATEGORY':
+      return action.sortByKey;
+    default:
+      return state;
+  }
+}
+
 const initialPostsState = [
   {
     id: '0',
@@ -42,11 +66,13 @@ export const posts = (state = initialPostsState, action) => {
     case 'GET_POST':
       return state;
     case actions.RECEIVED_POSTS:
-      return [...state, ...action.posts];
+      return orderBy([...state, ...action.posts], DEFAULT_SORT_KEY, ['desc']);
     case actions.ADD_POST_SUCCESS:
       return [...state, action.response];
     case actions.FILTER_POSTS:
       return action.posts;
+    case actions.SORT_POSTS:
+      return orderBy(state, [action.sortByKey], ['desc'])
     default:
       return state;
   }

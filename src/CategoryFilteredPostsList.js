@@ -3,6 +3,8 @@ import PostsList from './PostsList';
 import { connect } from 'react-redux';
 import * as actions from './actions';
 import get from 'lodash.get';
+import SortControl from './SortControl';
+import { withRouter } from 'react-router';
 const DEFAULT_FILTER = 'all';
 
 class CategoryFilteredPostsList extends Component {
@@ -11,38 +13,38 @@ class CategoryFilteredPostsList extends Component {
   };
 
   componentDidMount() {
-    this.props.dispatch(actions.fetchPosts());
-    this.setState({
-      category: get(this.props, 'match.params.categoryPath', DEFAULT_FILTER)
-    });
+    this.props.dispatch(actions.fetchPosts(this.props.visibleCategory));
   }
 
-  componentWillUpdate(prevProps) {
-    const nextCategory = get(prevProps, 'match.params.categoryPath', DEFAULT_FILTER);
-    if(nextCategory !== this.state.category) {
-      console.log('====== CALLING FETCH for category ', nextCategory);
-      this.props.dispatch(actions.fetchPostsByCategory(nextCategory));
-      this.setState({
-        category: nextCategory
-      });
+  componentWillReceiveProps(nextProps) {
+    const nextCategory = get(nextProps, 'match.params.categoryPath', DEFAULT_FILTER);
+    if(nextCategory !== this.props.visibleCategory) {
+      this.props.dispatch(actions.fetchPosts(nextCategory));
     }
   }
 
+  handleSortOnChange = (event) => {
+    const sortByKey = event.target.value;
+    this.props.dispatch(actions.sortPosts(sortByKey));
+  }
+
   render() {
-    const { category } = this.state;
-    const { posts, categories } = this.props.state;
-    console.log('CategoryFilteredPostsList posts => ', posts);
-    console.log('CategoryFilteredPostsList  category => ', category);
+    const { posts, categories, visibleCategory, sortByKey } = this.props.state;
     return (
-      <PostsList category={category} posts={posts} categories={categories}/>
+      <div>
+        <SortControl sortByKey={sortByKey.value} handleOnChange={this.handleSortOnChange} />
+        <PostsList visibleCategory={visibleCategory} posts={posts} categories={categories} {...this.props}/>
+      </div>
     );
   }
 };
 
-function mapStateToProps(state) {
+function mapStateToProps(state, routerParams) {
+  const visibleCategory = get(routerParams, 'match.params.categoryPath', DEFAULT_FILTER);
   return {
-    state
+    state,
+    visibleCategory
   }
 }
 
-export default connect(mapStateToProps)(CategoryFilteredPostsList);
+export default withRouter(connect(mapStateToProps)(CategoryFilteredPostsList));

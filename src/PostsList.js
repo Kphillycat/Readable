@@ -1,48 +1,14 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import orderBy from 'lodash.orderby';
-import PostForm from './PostForm.js'
-import * as actions from './actions';
 
 class PostsList extends Component {
-  state = {
-    sortedPosts: [],
-    sortByKey: 'voteScore'
-  };
-
-  componentDidMount(){
-    this.orderPosts();
-  }
-
-  componentWillReceiveProps(nextProps){
-    this.orderPosts(this.state.sortByKey, nextProps.posts);
-  }
-
-  orderPosts(byKey = this.state.sortByKey, posts = this.props.posts) {
-    this.setState({
-      sortedPosts: orderBy(posts, [byKey], ['desc']),
-      sortByKey: byKey
-    });
-  }
-
-  handleSubmit = (form) => {
-    this.props.dispatch(actions.addPost(form));
-  }
-
   render() {
-    console.log('PostsList props ',  this.props)
-    const { categories, posts, category: visibleCategory } = this.props;
-    const { sortedPosts, sortByKey } = this.state;
+    console.log('=== PostsList props ', this.props);
+
+    const { categories, visibleCategory, posts } = this.props;
 
     return (
       <div>
-        {/* Sort Control */}
-        <select name="sort-order" value={sortByKey} onChange={(e) => {this.orderPosts(e.target.value, posts)}}>
-          <option value="voteScore">Vote Score</option>
-          <option value="timestamp">Time</option>
-        </select>
-
         {/* List categories */}
         <Link to="/">HOME</Link>
         <div>
@@ -52,7 +18,7 @@ class PostsList extends Component {
                 { category.name === visibleCategory ?
                   <span>{category.name}</span>
                     :
-                  <Link to={`/category/${category.path}`}>{category.name}, </Link>
+                  <Link to={`/category/${category.path}`} onClick={this.onClickHandle}>{category.name}, </Link>
                 }
 
                 </li>
@@ -62,7 +28,7 @@ class PostsList extends Component {
         </div>
         {/* List Posts */}
         <div>
-          {sortedPosts.map((post) =>
+          {posts.map((post) =>
             <div key={post.id} style={
                 {
                   border: "solid black 1px"
@@ -88,11 +54,10 @@ class PostsList extends Component {
           )}
         </div>
         {/* Add Post */}
-        <PostForm categories={categories} handleSubmit={this.handleSubmit} />
+        <Link to="/post/new">Add Post</Link>
       </div>
     )
   }
 };
 
-
-export default connect()(PostsList);
+export default PostsList;
