@@ -25,7 +25,7 @@ id - UUID should be fine, but any unique id will work
 timestamp - timestamp in whatever format you like, you can use Date.now() if you like
 title - String
 body - String
-owner - String
+author - String
 category: Any of the categories listed in categories.js. Feel free to extend this list as you desire.
 ***/
 export const addPost = (params) =>
@@ -35,7 +35,7 @@ export const addPost = (params) =>
       ...headers,
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ params })
+    body: JSON.stringify(params)
   }).then(res => res.json())
     .then(data => data)
 

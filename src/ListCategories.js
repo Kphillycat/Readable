@@ -27,6 +27,10 @@ class ListCategories extends Component {
     });
   }
 
+  handleSubmit = (form) => {
+    this.props.dispatch(actions.addPost(form));
+  }
+
   render() {
     console.log('this.props ',  this.props)
     const { categories, posts } = this.props.state;
@@ -74,7 +78,7 @@ class ListCategories extends Component {
           )}
         </div>
         {/* Add Post */}
-        <PostForm categories={categories}/>
+        <PostForm categories={categories} handleSubmit={this.handleSubmit} />
       </div>
     )
   }

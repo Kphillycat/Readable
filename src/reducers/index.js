@@ -19,7 +19,6 @@ export const categories = (state = initialCategoryState, action) => {
   switch (action.type) {
     case 'SHOW_CATEGORY':
       return state;
-      break;
     default:
       return state;
   }
@@ -52,9 +51,10 @@ export const posts = (state = initialPostsState, action) => {
   switch (action.type) {
     case 'GET_POST':
       return state;
-      break;
     case actions.RECEIVED_POSTS:
       return [...state, ...action.posts];
+    case actions.ADD_POST_SUCCESS:
+      return [...state, action.response];
     default:
       return state;
   }
@@ -77,7 +77,6 @@ export const comments = (state = initialCommentsState, action) => {
   switch (action.type) {
     case 'SHOW_COMMENT':
       return state;
-      break;
     default:
       return state;
   }
