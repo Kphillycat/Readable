@@ -1,5 +1,7 @@
 import * as api from '../api';
 import { DEFAULT_SORT_KEY } from '../constants';
+import { normalize } from 'normalizr';
+import * as schema from './schema';
 
 export const RECEIVED_POSTS = 'RECEIVED_POSTS';
 export const ADD_POST_SUCCESS = 'ADD_POST_SUCCESS';
@@ -13,22 +15,22 @@ export const sortPosts = (sortByKey = DEFAULT_SORT_KEY) => ({
 
 export const receivedPosts = (posts) => ({
   type: RECEIVED_POSTS,
-  posts
+  posts,
+  normalized: normalize(posts, schema.arrayOfPosts)
 });
 
 export const receivedFilterPosts = (posts) => ({
   type: FILTER_POSTS,
-  posts
+  posts,
+  normalized: normalize(posts, schema.arrayOfPosts)
 });
 
 export const fetchPosts = (category) => (dispatch) => {
   if(category !== 'all') {
-    console.log('==== FETCHING POSTS FOR CATEGORY ', category);
     return api.getPostsByCategory(category).then((posts) =>
       dispatch(receivedFilterPosts(posts))
     );
   } else {
-    console.log('==== FETCHING ALL POSTS ');
     return api.getPosts().then(posts =>
       dispatch(receivedPosts(posts))
     );
@@ -39,14 +41,7 @@ export const addPost = (post) => (dispatch) =>
   api.addPost(post).then((response) =>
     dispatch({
       type: ADD_POST_SUCCESS,
-      response
+      post: response,
+      normalized: normalize(response, schema.arrayOfPosts)
     })
   );
-
-// export const fetchPostsByCategory = (category) => (dispatch) =>
-//   api.getPostsByCategory(category).then((posts) =>
-//     dispatch({
-//       type: FILTER_POSTS,
-//       posts
-//     })
-//   );

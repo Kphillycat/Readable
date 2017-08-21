@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import PostPreview from './PostPreview';
 
 class PostsList extends Component {
   render() {
@@ -15,7 +16,8 @@ class PostsList extends Component {
           <ul>
             {categories.map((category) =>
               <li key={category.path}>
-                { category.name === visibleCategory ?
+                {
+                  category.name === visibleCategory ?
                   <span>{category.name}</span>
                     :
                   <Link to={`/category/${category.path}`} onClick={this.onClickHandle}>{category.name}, </Link>
@@ -29,28 +31,7 @@ class PostsList extends Component {
         {/* List Posts */}
         <div>
           {posts.map((post) =>
-            <div key={post.id} style={
-                {
-                  border: "solid black 1px"
-                }
-              }>
-              <p>
-                {post.title}
-              </p>
-              <p>
-                {post.body.substring(0,30)}
-              </p>
-              <p>
-                Votes: {post.voteScore}
-              </p>
-              <p>
-                Date: {new Date(post.timestamp).toString()}
-              </p>
-              <p>
-                Category: {post.category}
-              </p>
-            </div>
-
+            <PostPreview key={post.id} post={post} />
           )}
         </div>
         {/* Add Post */}
