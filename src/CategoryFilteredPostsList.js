@@ -9,10 +9,6 @@ import orderBy from 'lodash.orderby';
 const DEFAULT_FILTER = 'all';
 
 class CategoryFilteredPostsList extends Component {
-  state = {
-    category: DEFAULT_FILTER
-  };
-
   componentDidMount() {
     this.props.dispatch(actions.fetchPosts(this.props.visibleCategory));
   }
@@ -46,7 +42,6 @@ function mapStateToProps(state, routerParams) {
   const visibleCategory = get(routerParams, 'match.params.categoryPath', DEFAULT_FILTER);
   let orderedPosts;
   if(visibleCategory === DEFAULT_FILTER) {
-    // TODO: Remove postsById and just use posts
     orderedPosts = orderBy(state.posts.postsById, state.sortByKey.value, ['desc']);
   } else {
     orderedPosts = orderBy(state.postsByCategories[visibleCategory], state.sortByKey.value, ['desc']);
