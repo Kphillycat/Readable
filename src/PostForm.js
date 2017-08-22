@@ -8,7 +8,7 @@ class PostForm extends Component {
     title: '',
     body: '',
     author: '',
-    category: this.props.categories[0].name
+    category: ''
   }
 
   createNewPost = (event) => {
@@ -33,6 +33,7 @@ class PostForm extends Component {
   }
 
   render() {
+    console.log('==== POST FORM props ', this.props);
     const { categories } = this.props;
 
     return (
@@ -69,6 +70,7 @@ class PostForm extends Component {
             value={this.state.category}
             onChange={(e) => this.handleChange(e)}
             >
+            <option value="">Please Select Category...</option>
             {categories.map((category) =>
               <option key={category.name} value={category.name}>{category.name}</option>
             )};

@@ -1,8 +1,5 @@
 import * as actions from '../actions';
-import orderBy from 'lodash.orderby';
 import { DEFAULT_SORT_KEY } from '../constants';
-
-
 
 const initialSortByKey = {
   value: DEFAULT_SORT_KEY

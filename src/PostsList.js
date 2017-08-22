@@ -4,8 +4,6 @@ import PostPreview from './PostPreview';
 
 class PostsList extends Component {
   render() {
-    console.log('=== PostsList props ', this.props);
-
     const { categories, visibleCategory, posts } = this.props;
 
     return (
