@@ -25,6 +25,12 @@ class CategoryFilteredPostsList extends Component {
     this.props.dispatch(actions.sortPosts(sortByKey));
   }
 
+  handleEdit = (post) => {
+    console.log('=== handleEdit', post);
+    this.props.dispatch(actions.editingPost(post));
+    this.props.history.push('/post/edit');
+  }
+
   render() {
     const { posts, categories, sortByKey } = this.props.state;
     const { visibleCategory, orderedPosts } = this.props;
@@ -32,7 +38,12 @@ class CategoryFilteredPostsList extends Component {
     return (
       <div>
         <SortControl sortByKey={sortByKey.value} handleOnChange={this.handleSortOnChange} />
-        <PostsList visibleCategory={visibleCategory} posts={orderedPosts} categories={categories} />
+        <PostsList
+          visibleCategory={visibleCategory}
+          posts={orderedPosts}
+          categories={categories}
+          handleEdit={this.handleEdit}
+          />
       </div>
     );
   }

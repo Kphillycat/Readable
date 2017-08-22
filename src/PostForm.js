@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { v4 } from 'uuid';
 import every from 'lodash.every';
 
-
 class PostForm extends Component {
   state = {
     title: '',
@@ -11,10 +10,22 @@ class PostForm extends Component {
     category: ''
   }
 
+  componentDidMount(){
+    const { formData } = this.props;
+    console.log('===== componentDidMount ', formData)
+    this.setState({
+      title: formData.title,
+      body: formData.body,
+      author: formData.author,
+      category: formData.category,
+      id: formData.id
+    });
+  }
+
   createNewPost = (event) => {
     event.preventDefault();
     const form = this.state;
-    form.id = v4();
+    form.id = form.id || v4();
     form.timestamp = Date.now();
     console.log('form ', form);
     // Check that form is filled out completely
@@ -34,7 +45,7 @@ class PostForm extends Component {
 
   render() {
     console.log('==== POST FORM props ', this.props);
-    const { categories } = this.props;
+    const { categories, formType } = this.props;
 
     return (
       <div>
@@ -42,7 +53,7 @@ class PostForm extends Component {
         <fieldset>
           <label htmlFor="title">Title</label>
           <input type="text" placeholder="Post Title" name="title" id="title"
-            value={this.state.tile}
+            value={this.state.title}
             onChange={(e) => this.handleChange(e)}
             >
           </input>
@@ -77,7 +88,7 @@ class PostForm extends Component {
           </select>
         </fieldset>
 
-        <button>Create New Post</button>
+        <button>{formType} Post</button>
         </form>
       </div>
     );

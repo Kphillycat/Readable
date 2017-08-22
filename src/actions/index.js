@@ -7,6 +7,7 @@ export const RECEIVED_POSTS = 'RECEIVED_POSTS';
 export const ADD_POST_SUCCESS = 'ADD_POST_SUCCESS';
 export const SORT_POSTS = 'SORT_POSTS';
 export const RECEIVED_POSTS_BY_CATEGORY = 'RECEIVED_POSTS_BY_CATEGORY';
+export const EDIT_POST = 'EDIT_POST';
 
 export const sortPosts = (sortByKey = DEFAULT_SORT_KEY) => ({
   type: SORT_POSTS,
@@ -26,6 +27,17 @@ export const receivedPostsByCategory = (posts, category) => ({
   normalized: normalize(posts, schema.arrayOfPosts)
 });
 
+export const editingPost = (formData) => ({
+  type: EDIT_POST,
+  formData
+});
+
+export const addPostSuccess = (post) => ({
+    type: ADD_POST_SUCCESS,
+    post: post,
+    normalized: normalize(post, schema.arrayOfPosts)
+})
+
 export const fetchPosts = (category) => (dispatch) => {
   if(category !== 'all') {
     return api.getPostsByCategory(category).then((posts) =>
@@ -40,9 +52,10 @@ export const fetchPosts = (category) => (dispatch) => {
 
 export const addPost = (post) => (dispatch) =>
   api.addPost(post).then((response) =>
-    dispatch({
-      type: ADD_POST_SUCCESS,
-      post: response,
-      normalized: normalize(response, schema.arrayOfPosts)
-    })
+    dispatch(addPostSuccess(response))
   );
+
+export const editPost = (post) => (dispatch) =>
+  api.editPost(post, post.id).then((response) =>
+    dispatch(addPostSuccess(response))
+  )

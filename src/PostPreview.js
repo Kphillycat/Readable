@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
 
 class PostPreview extends Component {
+  handleClick = (event) => {
+    event.preventDefault();
+    this.props.handleEdit(this.props.post);
+  }
+
   render() {
     const { post } = this.props;
     return (
@@ -24,6 +29,7 @@ class PostPreview extends Component {
             <p>
               Category: {post.category}
             </p>
+            <a href="#" onClick={this.handleClick}>Edit Post</a>
           </div>
     );
   }

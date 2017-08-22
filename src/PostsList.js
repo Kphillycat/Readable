@@ -4,7 +4,7 @@ import PostPreview from './PostPreview';
 
 class PostsList extends Component {
   render() {
-    const { categories, visibleCategory, posts } = this.props;
+    const { categories, visibleCategory, posts, handleEdit } = this.props;
 
     return (
       <div>
@@ -18,7 +18,7 @@ class PostsList extends Component {
                   category.name === visibleCategory ?
                   <span>{category.name}</span>
                     :
-                  <Link to={`/category/${category.path}`} onClick={this.onClickHandle}>{category.name}, </Link>
+                  <Link to={`/category/${category.path}`} >{category.name}, </Link>
                 }
 
                 </li>
@@ -29,7 +29,7 @@ class PostsList extends Component {
         {/* List Posts */}
         <div>
           {posts.map((post) =>
-            <PostPreview key={post.id} post={post} />
+            <PostPreview key={post.id} post={post} handleEdit={handleEdit}/>
           )}
         </div>
         {/* Add Post */}

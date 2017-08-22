@@ -38,22 +38,7 @@ export const categories = (state = initialCategoryState, action) => {
   }
 };
 
-const initialPostsState = {
-  postsById: {
-      '0': {
-        id: '0',
-        timestamp: Number(new Date('1/1/1990')),
-        title: 'TEST TITLE',
-        body: 'Chupa chups liquorice tootsie roll jelly-o marshmallow pastry bonbon pie. Toffee carrot cake caramels. Chocolate ice cream tiramisu cheesecake macaroon jujubes brownie croissant. Apple pie marshmallow lemon drops bear claw carrot cake brownie marzipan oat cake chupa chups. Candy canes jelly muffin gummies pastry sweet roll bear claw bear claw. Cake sugar plum cotton candy cupcake. Bear claw sugar plum carrot cake jujubes. Pie fruitcake gingerbread. Cake cake marzipan. Croissant sugar plum sesame snaps ice cream marshmallow cake chocolate cake chocolate bar apple pie. Tootsie roll icing jelly beans dessert toffee chocolate cake apple pie fruitcake. Marshmallow soufflé tart tiramisu. Candy canes cake halvah candy topping.',
-        author: 'ME',
-        category: 'redux',
-        voteScore: 1,
-        deleted: false
-      }
-    }
-};
-
-export const posts = (state = initialPostsState, action) => {
+export const posts = (state = {}, action) => {
   switch (action.type) {
     case actions.RECEIVED_POSTS:
       return {
@@ -100,3 +85,12 @@ export const comments = (state = initialCommentsState, action) => {
       return state;
   }
 };
+
+export const formData = (state = {}, action) => {
+  switch(action.type) {
+    case actions.EDIT_POST:
+      return {...state, ...action.formData}
+    default:
+      return state;
+  }
+}

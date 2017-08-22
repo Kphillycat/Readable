@@ -11,9 +11,24 @@ class App extends Component {
     return (
       <BrowserRouter>
         <div className="App">
-          <Route exact path="/" component={CategoryFilteredPostsList} />
-          <Route path="/category/:categoryPath" component={CategoryFilteredPostsList} />
+          <Route exact path="/" render={(history) =>
+              <CategoryFilteredPostsList
+                history={history}
+                />
+              }
+            />
+          <Route path="/category/:categoryPath" render={(history) =>
+              <CategoryFilteredPostsList
+                history={history}
+                />
+              }
+            />
           <Route path="/post/new" render={(history) =>
+              <PostFormContainer
+                history={history}
+                />}
+          />
+          <Route path="/post/edit" render={(history) =>
               <PostFormContainer
                 history={history}
                 />}
