@@ -2,6 +2,8 @@ import * as actions from '../actions';
 import orderBy from 'lodash.orderby';
 import { DEFAULT_SORT_KEY } from '../constants';
 
+
+
 const initialSortByKey = {
   value: DEFAULT_SORT_KEY
 };
@@ -61,10 +63,7 @@ const initialPostsState = {
         voteScore: 1,
         deleted: false
       }
-    },
-  postsByCategory: {
-
-  }
+    }
 };
 
 export const posts = (state = initialPostsState, action) => {
@@ -93,6 +92,17 @@ export const posts = (state = initialPostsState, action) => {
       return state;
   }
 };
+
+export const postsByCategories = (state = {}, action) => {
+  switch(action.type){
+    case actions.RECEIVED_POSTS_BY_CATEGORY:
+      return {
+        [action.category]: {...state[action.category], ...action.normalized.entities.post}
+      }
+    default:
+      return state;
+  }
+}
 
 const initialCommentsState = [
   {

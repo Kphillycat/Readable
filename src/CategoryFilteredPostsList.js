@@ -31,12 +31,12 @@ class CategoryFilteredPostsList extends Component {
 
   render() {
     const { posts, categories, sortByKey } = this.props.state;
-    const { visibleCategory } = this.props;
+    const { visibleCategory, orderedPosts } = this.props;
     console.log('=========  ============ this.props', this.props);
     return (
       <div>
         <SortControl sortByKey={sortByKey.value} handleOnChange={this.handleSortOnChange} />
-        <PostsList visibleCategory={visibleCategory} posts={posts.sortedPosts} categories={categories} />
+        <PostsList visibleCategory={visibleCategory} posts={orderedPosts} categories={categories} />
       </div>
     );
   }
@@ -44,7 +44,13 @@ class CategoryFilteredPostsList extends Component {
 
 function mapStateToProps(state, routerParams) {
   const visibleCategory = get(routerParams, 'match.params.categoryPath', DEFAULT_FILTER);
-  const orderedPosts = orderBy(state.posts.postsById, state.sortByKey.value, ['desc']);
+  let orderedPosts;
+  if(visibleCategory === DEFAULT_FILTER) {
+    // TODO: Remove postsById and just use posts
+    orderedPosts = orderBy(state.posts.postsById, state.sortByKey.value, ['desc']);
+  } else {
+    orderedPosts = orderBy(state.postsByCategories[visibleCategory], state.sortByKey.value, ['desc']);
+  }
 
   return {
     state,

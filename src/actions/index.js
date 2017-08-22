@@ -7,6 +7,7 @@ export const RECEIVED_POSTS = 'RECEIVED_POSTS';
 export const ADD_POST_SUCCESS = 'ADD_POST_SUCCESS';
 export const FILTER_POSTS = 'FILTER_POSTS';
 export const SORT_POSTS = 'SORT_POSTS';
+export const RECEIVED_POSTS_BY_CATEGORY = 'RECEIVED_POSTS_BY_CATEGORY';
 
 export const sortPosts = (sortByKey = DEFAULT_SORT_KEY) => ({
   type: SORT_POSTS,
@@ -19,16 +20,17 @@ export const receivedPosts = (posts) => ({
   normalized: normalize(posts, schema.arrayOfPosts)
 });
 
-export const receivedFilterPosts = (posts) => ({
-  type: FILTER_POSTS,
+export const receivedPostsByCategory = (posts, category) => ({
+  type: RECEIVED_POSTS_BY_CATEGORY,
   posts,
+  category,
   normalized: normalize(posts, schema.arrayOfPosts)
 });
 
 export const fetchPosts = (category) => (dispatch) => {
   if(category !== 'all') {
     return api.getPostsByCategory(category).then((posts) =>
-      dispatch(receivedFilterPosts(posts))
+      dispatch(receivedPostsByCategory(posts, category))
     );
   } else {
     return api.getPosts().then(posts =>
