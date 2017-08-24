@@ -88,8 +88,8 @@ const initialCommentsState = {
 
 export const comments = (state = initialCommentsState, action) => {
   switch (action.type) {
-    case 'SHOW_COMMENT':
-      return state;
+    case actions.RECEIVED_COMMENTS_SUCCESS:
+      return {...state, ...action.normalized.entities.comment};
     default:
       return state;
   }

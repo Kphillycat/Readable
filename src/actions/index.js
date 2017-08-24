@@ -9,6 +9,7 @@ export const SORT_POSTS = 'SORT_POSTS';
 export const RECEIVED_POSTS_BY_CATEGORY = 'RECEIVED_POSTS_BY_CATEGORY';
 export const EDIT_POST = 'EDIT_POST';
 export const RECEIVED_POST_DETAIL = 'RECEIVED_POST_DETAIL';
+export const RECEIVED_COMMENTS_SUCCESS = 'RECEIVED_COMMENTS_SUCCESS';
 
 export const sortPosts = (sortByKey = DEFAULT_SORT_KEY) => ({
   type: SORT_POSTS,
@@ -44,6 +45,12 @@ export const getPostDetailSuccess = (post) => ({
   post
 })
 
+export const receivedCommentsSuccess = (comments) => ({
+  type: RECEIVED_COMMENTS_SUCCESS,
+  comments,
+  normalized: normalize(comments, schema.arrayOfComments)
+})
+
 export const fetchPosts = (category) => (dispatch) => {
   if(category !== 'all') {
     return api.getPostsByCategory(category).then((posts) =>
@@ -69,4 +76,9 @@ export const editPost = (post) => (dispatch) =>
 export const getPostDetail = (id) => (dispatch) =>
   api.getPostsById(id).then((response) =>
     dispatch(getPostDetailSuccess(response))
+  )
+
+export const fetchComments = (id) => (dispatch) =>
+  api.getCommentsByPost(id).then(response =>
+    dispatch(receivedCommentsSuccess(response))
   )
