@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 class PostPreview extends Component {
   handleClick = (event) => {
@@ -30,6 +31,7 @@ class PostPreview extends Component {
               Category: {post.category}
             </p>
             <a href="#" onClick={this.handleClick}>Edit Post</a>
+            <Link to={`/post/${post.id}`}>View Post</Link>
           </div>
     );
   }

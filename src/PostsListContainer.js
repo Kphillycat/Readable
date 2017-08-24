@@ -8,7 +8,7 @@ import { withRouter } from 'react-router';
 import orderBy from 'lodash.orderby';
 const DEFAULT_FILTER = 'all';
 
-class CategoryFilteredPostsList extends Component {
+class PostsListContainer extends Component {
   componentDidMount() {
     this.props.dispatch(actions.fetchPosts(this.props.visibleCategory));
   }
@@ -26,15 +26,13 @@ class CategoryFilteredPostsList extends Component {
   }
 
   handleEdit = (post) => {
-    console.log('=== handleEdit', post);
     this.props.dispatch(actions.editingPost(post));
     this.props.history.push('/post/edit');
   }
 
   render() {
-    const { posts, categories, sortByKey } = this.props.state;
+    const { categories, sortByKey } = this.props.state;
     const { visibleCategory, orderedPosts } = this.props;
-    console.log('=========  ============ this.props', this.props);
     return (
       <div>
         <SortControl sortByKey={sortByKey.value} handleOnChange={this.handleSortOnChange} />
@@ -65,4 +63,4 @@ function mapStateToProps(state, routerParams) {
   }
 }
 
-export default withRouter(connect(mapStateToProps)(CategoryFilteredPostsList));
+export default withRouter(connect(mapStateToProps)(PostsListContainer));

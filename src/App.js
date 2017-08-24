@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import { Route, BrowserRouter } from 'react-router-dom';
-import CategoryFilteredPostsList from './CategoryFilteredPostsList.js';
+import PostsListContainer from './PostsListContainer.js';
 import PostFormContainer from './PostFormContainer.js';
+import PostDetail from './PostDetail.js';
 import { connect } from 'react-redux';
 
 class App extends Component {
@@ -12,13 +13,13 @@ class App extends Component {
       <BrowserRouter>
         <div className="App">
           <Route exact path="/" render={(history) =>
-              <CategoryFilteredPostsList
+              <PostsListContainer
                 history={history}
                 />
               }
             />
           <Route path="/category/:categoryPath" render={(history) =>
-              <CategoryFilteredPostsList
+              <PostsListContainer
                 history={history}
                 />
               }
@@ -30,6 +31,11 @@ class App extends Component {
           />
           <Route path="/post/edit" render={(history) =>
               <PostFormContainer
+                history={history}
+                />}
+          />
+        <Route path="/post/:id" render={(history) =>
+              <PostDetail
                 history={history}
                 />}
           />

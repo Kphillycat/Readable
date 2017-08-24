@@ -64,10 +64,19 @@ export const postsByCategories = (state = {}, action) => {
   }
 }
 
-const initialCommentsState = [
-  {
+export const postDetail = (state = {}, action) => {
+  switch(action.type){
+    case actions.RECEIVED_POST_DETAIL:
+      return {...state, ...action.post}
+    default:
+      return state;
+  }
+}
+
+const initialCommentsState = {
+  '0': {
     id: '',
-    parentId: '',
+    parentId: '0',
     timestamp: '',
     body: '',
     author: '',
@@ -75,7 +84,7 @@ const initialCommentsState = [
     deleted: false,
     parentDeleted: false
   }
-];
+}
 
 export const comments = (state = initialCommentsState, action) => {
   switch (action.type) {

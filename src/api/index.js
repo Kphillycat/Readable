@@ -5,11 +5,13 @@ const headers = {
   Authorization: 'boomshakalaka'
 }
 
+/*********************** CATEGORY APIs ***********************/
 export const getCategories = () =>
   fetch(`${endpoint}/categories`, { headers })
     .then(res => res.json())
     .then(data => data)
 
+/*********************** POST APIs ***********************/
 export const getPostsByCategory = (category) =>
   fetch(`${endpoint}/${category}/posts`, { headers })
     .then(res => res.json())
@@ -85,6 +87,8 @@ export const deletePost = (params, id) =>
   }).then(res => res.json())
     .then(data => data)
 
+/*********************** COMMENTS APIs ***********************/
+
 export const getCommentsByPost = (id) =>
   fetch(`${endpoint}/posts/${id}/comments`, { headers })
     .then(res => res.json())
@@ -113,7 +117,6 @@ export const getCommentById = (id) =>
   fetch(`${endpoint}/comments/${id}`, { headers })
     .then(res => res.json())
     .then(data => data)
-
 
 /**
 params:
