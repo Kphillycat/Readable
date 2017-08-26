@@ -7,6 +7,11 @@ class PostPreview extends Component {
     this.props.handleEdit(this.props.post);
   }
 
+  handleVoteClick = (event) => {
+    event.preventDefault();
+    this.props.handleVote(event.target.id, this.props.post.id);
+  }
+
   render() {
     const { post } = this.props;
     return (
@@ -32,6 +37,9 @@ class PostPreview extends Component {
             </p>
             <a href="#" onClick={this.handleClick}>Edit Post</a>
             <Link to={`/post/${post.id}`}>View Post</Link>
+            {/* Vote */}
+            <button onClick={this.handleVoteClick} id="upVote">UpVote</button>
+            <button onClick={this.handleVoteClick} id="downVote">DownVote</button>
           </div>
     );
   }

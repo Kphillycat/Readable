@@ -30,6 +30,10 @@ class PostsListContainer extends Component {
     this.props.history.push('/post/edit');
   }
 
+  handleVote = (voteType, id) => {
+    this.props.dispatch(actions.votePost(voteType, id))
+  }
+
   render() {
     const { categories, sortByKey } = this.props.state;
     const { visibleCategory, orderedPosts } = this.props;
@@ -41,6 +45,7 @@ class PostsListContainer extends Component {
           posts={orderedPosts}
           categories={categories}
           handleEdit={this.handleEdit}
+          handleVote={this.handleVote}
           />
       </div>
     );

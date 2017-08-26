@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import PostPreview from './PostPreview';
 
-class PostsList extends Component {
+class PostsList extends Component {  
   render() {
-    const { categories, visibleCategory, posts, handleEdit } = this.props;
+    const { categories, visibleCategory, posts, handleEdit, handleVote } = this.props;
 
     return (
       <div>
@@ -29,11 +29,12 @@ class PostsList extends Component {
         {/* List Posts */}
         <div>
           {posts.map((post) =>
-            <PostPreview key={post.id} post={post} handleEdit={handleEdit}/>
+            <PostPreview key={post.id} post={post} handleEdit={handleEdit} handleVote={handleVote}/>
           )}
         </div>
         {/* Add Post */}
         <Link to="/post/new">Add Post</Link>
+
       </div>
     )
   }

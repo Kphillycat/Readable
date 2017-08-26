@@ -48,6 +48,10 @@ export const posts = (state = {}, action) => {
       return {
         postsById: {...state.postsById, ...action.normalized.entities.post}
       }
+    case actions.RECEIVED_VOTED_POST:
+      return {
+        postsById: {...state.postsById, ...action.normalized.entities.post}
+      }
     default:
       return state;
   }

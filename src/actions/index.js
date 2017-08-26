@@ -10,6 +10,7 @@ export const RECEIVED_POSTS_BY_CATEGORY = 'RECEIVED_POSTS_BY_CATEGORY';
 export const EDIT_POST = 'EDIT_POST';
 export const RECEIVED_POST_DETAIL = 'RECEIVED_POST_DETAIL';
 export const RECEIVED_COMMENTS_SUCCESS = 'RECEIVED_COMMENTS_SUCCESS';
+export const RECEIVED_VOTED_POST = 'RECEIVED_VOTED_POST';
 
 export const sortPosts = (sortByKey = DEFAULT_SORT_KEY) => ({
   type: SORT_POSTS,
@@ -36,19 +37,26 @@ export const editingPost = (formData) => ({
 
 export const addPostSuccess = (post) => ({
     type: ADD_POST_SUCCESS,
-    post: post,
+    post,
     normalized: normalize(post, schema.arrayOfPosts)
 })
 
 export const getPostDetailSuccess = (post) => ({
   type: RECEIVED_POST_DETAIL,
-  post
+  post,
+  normalized: normalize(post, schema.post)
 })
 
 export const receivedCommentsSuccess = (comments) => ({
   type: RECEIVED_COMMENTS_SUCCESS,
   comments,
   normalized: normalize(comments, schema.arrayOfComments)
+})
+
+export const receivedVotedPostSuccess = (post) => ({
+  type: RECEIVED_VOTED_POST,
+  post,
+  normalized: normalize(post, schema.post)
 })
 
 export const fetchPosts = (category) => (dispatch) => {
@@ -81,4 +89,9 @@ export const getPostDetail = (id) => (dispatch) =>
 export const fetchComments = (id) => (dispatch) =>
   api.getCommentsByPost(id).then(response =>
     dispatch(receivedCommentsSuccess(response))
+  )
+
+export const votePost = (voteType, id) => (dispatch) =>
+  api.votePost(voteType, id).then(response =>
+    dispatch(receivedVotedPostSuccess(response))
   )
