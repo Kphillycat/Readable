@@ -9,6 +9,8 @@ export const sortByKey = (state = initialSortByKey, action) =>  {
   switch(action.type) {
     case actions.SORT_POSTS:
       return {value: action.sortByKey};
+    case actions.SORT_COMMENTS:
+      return {value: action.sortByKey};
     default:
       return state;
   }
@@ -81,20 +83,7 @@ export const postDetail = (state = {}, action) => {
   }
 }
 
-const initialCommentsState = {
-  '0': {
-    id: '',
-    parentId: '0',
-    timestamp: '',
-    body: '',
-    author: '',
-    voteScore: 1,
-    deleted: false,
-    parentDeleted: false
-  }
-}
-
-export const comments = (state = initialCommentsState, action) => {
+export const comments = (state = {}, action) => {
   switch (action.type) {
     case actions.RECEIVED_COMMENTS_SUCCESS:
       return {...state, ...action.normalized.entities.comment};

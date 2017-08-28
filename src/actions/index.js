@@ -11,9 +11,15 @@ export const EDIT_POST = 'EDIT_POST';
 export const RECEIVED_POST_DETAIL = 'RECEIVED_POST_DETAIL';
 export const RECEIVED_COMMENTS_SUCCESS = 'RECEIVED_COMMENTS_SUCCESS';
 export const RECEIVED_VOTED_POST = 'RECEIVED_VOTED_POST';
+export const SORT_COMMENTS = 'SORT_COMMENTS';
 
 export const sortPosts = (sortByKey = DEFAULT_SORT_KEY) => ({
   type: SORT_POSTS,
+  sortByKey
+});
+
+export const sortComments = (sortByKey = DEFAULT_SORT_KEY) => ({
+  type: SORT_COMMENTS,
   sortByKey
 });
 
