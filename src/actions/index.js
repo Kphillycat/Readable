@@ -56,7 +56,8 @@ export const receivedCommentsSuccess = (comments) => ({
 export const receivedVotedPostSuccess = (post) => ({
   type: RECEIVED_VOTED_POST,
   post,
-  normalized: normalize(post, schema.post)
+  normalized: normalize(post, schema.post),
+  category: post.category
 })
 
 export const fetchPosts = (category) => (dispatch) => {

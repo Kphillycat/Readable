@@ -63,6 +63,10 @@ export const postsByCategories = (state = {}, action) => {
       return {
         [action.category]: {...state[action.category], ...action.normalized.entities.post}
       }
+    case actions.RECEIVED_VOTED_POST:
+      return {
+        [action.category]: {...state[action.category], ...action.normalized.entities.post}
+      }
     default:
       return state;
   }
