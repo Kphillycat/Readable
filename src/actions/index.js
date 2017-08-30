@@ -12,6 +12,7 @@ export const RECEIVED_POST_DETAIL = 'RECEIVED_POST_DETAIL';
 export const RECEIVED_COMMENTS_SUCCESS = 'RECEIVED_COMMENTS_SUCCESS';
 export const RECEIVED_VOTED_POST = 'RECEIVED_VOTED_POST';
 export const SORT_COMMENTS = 'SORT_COMMENTS';
+export const ADD_COMMENT_SUCCESS = 'ADD_COMMENT_SUCCESS';
 
 export const sortPosts = (sortByKey = DEFAULT_SORT_KEY) => ({
   type: SORT_POSTS,
@@ -59,6 +60,12 @@ export const receivedCommentsSuccess = (comments) => ({
   normalized: normalize(comments, schema.arrayOfComments)
 })
 
+export const addCommentSuccess = (comment) => ({
+  type: ADD_COMMENT_SUCCESS,
+  comment,
+  normalized: normalize(comment, schema.comment)
+})
+
 export const receivedVotedPostSuccess = (post) => ({
   type: RECEIVED_VOTED_POST,
   post,
@@ -101,4 +108,9 @@ export const fetchComments = (id) => (dispatch) =>
 export const votePost = (voteType, id) => (dispatch) =>
   api.votePost(voteType, id).then(response =>
     dispatch(receivedVotedPostSuccess(response))
+  )
+
+export const addComment = (comment) => (dispatch) =>
+  api.addComment(comment).then(response =>
+    dispatch(addCommentSuccess(response))
   )

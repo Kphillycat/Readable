@@ -87,6 +87,8 @@ export const comments = (state = {}, action) => {
   switch (action.type) {
     case actions.RECEIVED_COMMENTS_SUCCESS:
       return {...state, ...action.normalized.entities.comment};
+    case actions.ADD_COMMENT_SUCCESS:
+      return {...state, ...action.normalized.entities.comment};
     default:
       return state;
   }

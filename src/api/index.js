@@ -99,17 +99,17 @@ params:
 id: Any unique ID. As with posts, UUID is probably the best here.
 timestamp: timestamp. Get this however you want.
 body: String
-owner: String
+author: String
 parentId: Should match a post id in the database.
 **/
 export const addComment = (params) =>
-  fetch(`${endpoint}/comment`, {
+  fetch(`${endpoint}/comments`, {
     method: 'POST',
     headers: {
       ...headers,
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ params })
+    body: JSON.stringify(params)
   }).then(res => res.json())
     .then(data => data)
 
