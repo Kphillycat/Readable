@@ -49,6 +49,10 @@ class PostDetail extends Component {
     );
   }
 
+  handleCommentVote = (voteType, commentId) => {
+    this.props.dispatch(actions.voteOnComment(voteType, commentId));
+  }
+
   render () {
     console.log('---- PostDetail ', this.props);
     const { postDetail, sortByKey } = this.props.state;
@@ -62,7 +66,7 @@ class PostDetail extends Component {
         <p>Vote Score: {postDetail.voteScore}</p>
         <h3>Comments</h3>
         <SortControl handleOnChange={this.handleSortOnChange} sortByKey={sortByKey.value}/>
-        <Comments comments={orderedComments} />
+        <Comments comments={orderedComments} handleCommentVote={this.handleCommentVote}/>
         {/** Add new comment **/}
         <h3>Add New Comment</h3>
         <form onSubmit={this.handleSubmit}>

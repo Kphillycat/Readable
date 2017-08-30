@@ -89,6 +89,8 @@ export const comments = (state = {}, action) => {
       return {...state, ...action.normalized.entities.comment};
     case actions.ADD_COMMENT_SUCCESS:
       return {...state, ...action.normalized.entities.comment};
+    case actions.RECEIVED_VOTED_COMMENT:
+      return {...state, ...action.normalized.entities.comment};
     default:
       return state;
   }

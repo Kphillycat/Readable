@@ -1,22 +1,19 @@
 import React, { Component } from 'react';
+import Comment from './Comment';
 
 class Comments extends Component {
+  handleVote = (voteType, id) => {
+    this.props.handleCommentVote(voteType, id);
+  }
+
   render() {
     const { comments } = this.props;
     return (
-      <ul>
+      <div>
         {comments.map((comment) =>
-          <li key={comment.id} style={{
-              listStyleType: "none",
-              border: "solid black 1px"
-            }}>
-            <p>Body: {comment.body}</p>
-            <p>Author: {comment.author} </p>
-            <p>Time: {new Date(comment.timestamp).toString()} </p>
-            <p>Vote Score: {comment.voteScore} </p>
-          </li>
+          <Comment key={comment.id} comment={comment} handleVote={this.handleVote}/>
         )}
-      </ul>
+      </div>
     )
   }
 }
