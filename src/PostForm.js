@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { v4 } from 'uuid';
 import every from 'lodash.every';
+import isEmpty from 'lodash.isempty';
 
 class PostForm extends Component {
   state = {
@@ -12,6 +13,7 @@ class PostForm extends Component {
 
   componentDidMount(){
     const { formData } = this.props;
+    if(isEmpty(formData)) return;
     this.setState({
       title: formData.title,
       body: formData.body,

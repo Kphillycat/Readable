@@ -35,8 +35,8 @@ class PostPreview extends Component {
             <p>
               Category: {post.category}
             </p>
-            <a href="#" onClick={this.handleClick}>Edit Post</a>
-            <Link to={`/post/${post.id}`}>View Post</Link>
+            <button onClick={this.handleClick}>Edit Post</button>
+            <Link to={`/post/view/${post.id}`}>View Post</Link>
             {/* Vote */}
             <button onClick={this.handleVoteClick} id="upVote">UpVote</button>
             <button onClick={this.handleVoteClick} id="downVote">DownVote</button>

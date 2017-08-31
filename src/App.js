@@ -34,7 +34,7 @@ class App extends Component {
                 history={history}
                 />}
           />
-        <Route path="/post/:id" render={(history) =>
+        <Route path="/post/view/:id" render={(history) =>
               <PostDetail
                 history={history}
                 />}
