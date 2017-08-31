@@ -78,6 +78,8 @@ export const postDetail = (state = {}, action) => {
   switch(action.type){
     case actions.RECEIVED_POST_DETAIL:
       return {...state, ...action.post}
+    case actions.RECEIVED_VOTED_POST:
+      return {...state, ...action.post}  
     default:
       return state;
   }

@@ -31,7 +31,7 @@ class PostsListContainer extends Component {
   }
 
   handleVote = (voteType, id) => {
-    this.props.dispatch(actions.votePost(voteType, id))
+    this.props.dispatch(actions.voteOnPost(voteType, id))
   }
 
   render() {

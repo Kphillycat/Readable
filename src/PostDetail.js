@@ -35,7 +35,6 @@ class PostDetail extends Component {
     form.parentId = this.props.state.postDetail.id;
     form.timestamp = Date.now();
     if(every(form)) {
-      console.log('form state', form);
       this.props.dispatch(actions.addComment(form));
     }
   }
@@ -53,6 +52,12 @@ class PostDetail extends Component {
     this.props.dispatch(actions.voteOnComment(voteType, commentId));
   }
 
+  handlePostVote = (event) => {
+    const voteType = event.target.id;
+    const postId = this.props.state.postDetail.id;
+    this.props.dispatch(actions.voteOnPost(voteType, postId));
+  }
+
   render () {
     console.log('---- PostDetail ', this.props);
     const { postDetail, sortByKey } = this.props.state;
@@ -64,6 +69,9 @@ class PostDetail extends Component {
         <p>Author: {postDetail.author}</p>
         <p>Time: {new Date(postDetail.timestamp).toString()} </p>
         <p>Vote Score: {postDetail.voteScore}</p>
+        {/** Voting **/}
+        <button id="upVote" onClick={this.handlePostVote}>Up Vote</button>
+        <button id="downVote" onClick={this.handlePostVote}>Down Vote</button>
         <h3>Comments</h3>
         <SortControl handleOnChange={this.handleSortOnChange} sortByKey={sortByKey.value}/>
         <Comments comments={orderedComments} handleCommentVote={this.handleCommentVote}/>

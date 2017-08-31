@@ -49,7 +49,7 @@ export const getPostsById = (id) =>
 /***
 params: option - String: Either "upVote" or "downVote"
 ***/
-export const votePost = (params, id) =>
+export const voteOnPost = (params, id) =>
   fetch(`${endpoint}/posts/${id}`, {
     method: 'POST',
     headers: {

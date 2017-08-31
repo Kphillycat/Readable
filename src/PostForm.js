@@ -12,7 +12,6 @@ class PostForm extends Component {
 
   componentDidMount(){
     const { formData } = this.props;
-    console.log('===== componentDidMount ', formData)
     this.setState({
       title: formData.title,
       body: formData.body,
@@ -27,7 +26,6 @@ class PostForm extends Component {
     const form = this.state;
     form.id = form.id || v4();
     form.timestamp = Date.now();
-    console.log('form ', form);
     // Check that form is filled out completely
     if(every(form)) {
       this.props.handleSubmit(form);
@@ -44,7 +42,6 @@ class PostForm extends Component {
   }
 
   render() {
-    console.log('==== POST FORM props ', this.props);
     const { categories, formType } = this.props;
 
     return (

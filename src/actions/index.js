@@ -112,8 +112,8 @@ export const fetchComments = (id) => (dispatch) =>
     dispatch(receivedCommentsSuccess(response))
   )
 
-export const votePost = (voteType, id) => (dispatch) =>
-  api.votePost(voteType, id).then(response =>
+export const voteOnPost = (voteType, id) => (dispatch) =>
+  api.voteOnPost(voteType, id).then(response =>
     dispatch(receivedVotedPostSuccess(response))
   )
 
