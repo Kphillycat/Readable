@@ -8,6 +8,8 @@ import SortControl from './SortControl';
 import Comments from './Comments';
 import { v4 } from 'uuid';
 import every from 'lodash.every';
+import reduce from 'lodash.reduce';
+import { Link } from 'react-router-dom';
 
 class PostDetail extends Component {
   state = {
@@ -64,6 +66,7 @@ class PostDetail extends Component {
     const { orderedComments } = this.props;
     return (
       <div>
+        <Link to="/">Home</Link>
         <h3>{postDetail.title}</h3>
         <p>{postDetail.body}</p>
         <p>Author: {postDetail.author}</p>
@@ -101,11 +104,17 @@ class PostDetail extends Component {
 
 function mapStateToProps(state, routerParams) {
   const postId = get(routerParams, 'match.params.id');
-  const orderedComments = orderBy(state.comments, state.sortByKey.value, ['desc']);
+  const commentsByPostId = reduce(state.comments, function(result, value, key) {
+    result[value.parentId] = result[value.parentId] || [];
+    result[value.parentId].push(value);
+    return result;
+  }, {});
+  const orderedComments = orderBy(commentsByPostId[postId], state.sortByKey.value, ['desc']);
   return {
     state,
     postId,
-    orderedComments
+    orderedComments,
+    commentsByPostId
   }
 }
 

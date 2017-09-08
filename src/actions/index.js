@@ -82,13 +82,11 @@ export const receivedVotedCommentSuccess = (comment) => ({
 
 export const fetchPosts = (category) => (dispatch) => {
   if(category !== 'all') {
-    return api.getPostsByCategory(category).then((posts) =>
-      dispatch(receivedPostsByCategory(posts, category))
-    );
+    return api.getPostsByCategory(category).then(posts =>
+      dispatch(receivedPostsByCategory(posts, category)));
   } else {
     return api.getPosts().then(posts =>
-      dispatch(receivedPosts(posts))
-    );
+      dispatch(receivedPosts(posts)));
   }
 };
 
