@@ -11,6 +11,7 @@ const DEFAULT_FILTER = 'all';
 class PostsListContainer extends Component {
   componentDidMount() {
     this.props.dispatch(actions.fetchPosts(this.props.visibleCategory));
+    this.props.dispatch(actions.getCategories());
   }
 
   componentWillReceiveProps(nextProps) {

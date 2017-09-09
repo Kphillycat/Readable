@@ -33,8 +33,8 @@ const initialCategoryState = [
 
 export const categories = (state = initialCategoryState, action) => {
   switch (action.type) {
-    case 'SHOW_CATEGORY':
-      return action.category;
+    case actions.RECEIVED_CATEGORIES:
+      return action.categories;
     default:
       return state;
   }

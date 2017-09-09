@@ -9,7 +9,7 @@ const headers = {
 export const getCategories = () =>
   fetch(`${endpoint}/categories`, { headers })
     .then(res => res.json())
-    .then(data => data)
+    .then(data => data.categories)
 
 /*********************** POST APIs ***********************/
 export const getPostsByCategory = (category) =>

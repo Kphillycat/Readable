@@ -6,7 +6,6 @@ import { getNumberOfCommentsOfPost } from './utils';
 class PostsList extends Component {
   render() {
     const { categories, visibleCategory, posts, handleEdit, handleVote, comments} = this.props;
-console.log('comments ', comments);
     return (
       <div>
         {/* List categories */}
