@@ -13,7 +13,7 @@ class PostPreview extends Component {
   }
 
   render() {
-    const { post } = this.props;
+    const { post, commentNumbers } = this.props;
     return (
       <div style={
               {
@@ -34,6 +34,9 @@ class PostPreview extends Component {
             </p>
             <p>
               Category: {post.category}
+            </p>
+            <p>
+              Number of Comments: {commentNumbers}
             </p>
             <button onClick={this.handleClick}>Edit Post</button>
             <Link to={`/post/view/${post.id}`}>View Post</Link>

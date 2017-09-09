@@ -35,7 +35,7 @@ class PostsListContainer extends Component {
   }
 
   render() {
-    const { categories, sortByKey } = this.props.state;
+    const { categories, sortByKey, comments } = this.props.state;
     const { visibleCategory, orderedPosts } = this.props;
     return (
       <div>
@@ -44,6 +44,7 @@ class PostsListContainer extends Component {
           visibleCategory={visibleCategory}
           posts={orderedPosts}
           categories={categories}
+          comments={comments}
           handleEdit={this.handleEdit}
           handleVote={this.handleVote}
           />

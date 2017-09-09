@@ -79,7 +79,7 @@ export const postDetail = (state = {}, action) => {
     case actions.RECEIVED_POST_DETAIL:
       return {...state, ...action.post}
     case actions.RECEIVED_VOTED_POST:
-      return {...state, ...action.post}  
+      return {...state, ...action.post}
     default:
       return state;
   }
