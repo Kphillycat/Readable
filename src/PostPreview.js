@@ -12,6 +12,11 @@ class PostPreview extends Component {
     this.props.handleVote(event.target.id, this.props.post.id);
   }
 
+  handleDeleteClick = (event) => {
+    event.preventDefault();
+    this.props.handleDelete(this.props.post.id);
+  }
+
   render() {
     const { post, commentNumbers } = this.props;
     return (
@@ -38,6 +43,7 @@ class PostPreview extends Component {
             <p>
               Number of Comments: {commentNumbers}
             </p>
+            <button onClick={this.handleDeleteClick}>Delete Post</button>
             <button onClick={this.handleClick}>Edit Post</button>
             <Link to={`/post/view/${post.id}`}>View Post</Link>
             {/* Vote */}

@@ -1,5 +1,6 @@
 import * as actions from '../actions';
 import { DEFAULT_SORT_KEY } from '../constants';
+import filter from 'lodash.filter';
 
 const initialSortByKey = {
   value: DEFAULT_SORT_KEY
@@ -53,6 +54,10 @@ export const posts = (state = {}, action) => {
     case actions.RECEIVED_VOTED_POST:
       return {
         postsById: {...state.postsById, ...action.normalized.entities.post}
+      }
+    case actions.DELETE_POST_SUCCESS:
+      return {
+        postsById: filter(state.postsById, (post) => post.id !== action.id)
       }
     default:
       return state;

@@ -5,7 +5,7 @@ import { getNumberOfCommentsOfPost } from './utils';
 
 class PostsList extends Component {
   render() {
-    const { categories, visibleCategory, posts, handleEdit, handleVote, comments} = this.props;
+    const { categories, visibleCategory, posts, handleEdit, handleVote, handleDelete, comments} = this.props;
     return (
       <div>
         {/* List categories */}
@@ -34,6 +34,7 @@ class PostsList extends Component {
               post={post}
               handleEdit={handleEdit}
               handleVote={handleVote}
+              handleDelete={handleDelete}
               commentNumbers={getNumberOfCommentsOfPost(comments, post.id)}/>
           )}
         </div>

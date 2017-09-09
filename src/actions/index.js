@@ -15,6 +15,7 @@ export const SORT_COMMENTS = 'SORT_COMMENTS';
 export const ADD_COMMENT_SUCCESS = 'ADD_COMMENT_SUCCESS';
 export const RECEIVED_VOTED_COMMENT = 'RECEIVED_VOTED_COMMENT';
 export const RECEIVED_CATEGORIES = 'RECEIVED_CATEGORIES';
+export const DELETE_POST_SUCCESS = 'DELETE_POST_SUCCESS';
 
 export const sortPosts = (sortByKey = DEFAULT_SORT_KEY) => ({
   type: SORT_POSTS,
@@ -75,6 +76,11 @@ export const receivedVotedPostSuccess = (post) => ({
   category: post.category
 })
 
+export const deletePostSuccess = (id) => ({
+  type: DELETE_POST_SUCCESS,
+  id
+})
+
 export const receivedVotedCommentSuccess = (comment) => ({
   type: RECEIVED_VOTED_COMMENT,
   comment,
@@ -89,11 +95,13 @@ export const receivedCategories = (categories) => ({
 export const fetchPosts = (category) => (dispatch) => {
   if(category !== 'all') {
     return api.getPostsByCategory(category).then((posts) => {
+      posts = posts.filter((post) => !post.deleted);
       dispatch(receivedPostsByCategory(posts, category));
     }
     );
   } else {
     return api.getPosts().then(posts => {
+      posts = posts.filter((post) => !post.deleted);
       // Get all the comments
       posts.forEach((post) =>
         dispatch(fetchComments(post.id))
@@ -129,6 +137,7 @@ export const voteOnPost = (voteType, id) => (dispatch) =>
     dispatch(receivedVotedPostSuccess(response))
   )
 
+
 export const addComment = (comment) => (dispatch) =>
   api.addComment(comment).then(response =>
     dispatch(addCommentSuccess(response))
@@ -143,3 +152,10 @@ export const getCategories = () => (dispatch) =>
   api.getCategories().then(response =>
     dispatch(receivedCategories(response))
   )
+
+export const deletePost = (id) => (dispatch) =>
+  api.deletePost(id).then(response => {
+    if(response.status === 200) {
+      dispatch(deletePostSuccess(id));
+    }
+  })

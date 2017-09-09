@@ -76,16 +76,12 @@ export const editPost = (params, id) =>
   }).then(res => res.json())
     .then(data => data)
 
-export const deletePost = (params, id) =>
+export const deletePost = (id) =>
   fetch(`${endpoint}/posts/${id}`, {
     method: 'DELETE',
-    headers: {
-      ...headers,
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({ params })
-  }).then(res => res.json())
-    .then(data => data)
+    headers
+  }).then(res => res)
+    .catch(err => err)
 
 /*********************** COMMENTS APIs ***********************/
 

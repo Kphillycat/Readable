@@ -32,7 +32,11 @@ class PostsListContainer extends Component {
   }
 
   handleVote = (voteType, id) => {
-    this.props.dispatch(actions.voteOnPost(voteType, id))
+    this.props.dispatch(actions.voteOnPost(voteType, id));
+  }
+
+  handleDelete = (id) => {
+    this.props.dispatch(actions.deletePost(id));
   }
 
   render() {
@@ -48,6 +52,7 @@ class PostsListContainer extends Component {
           comments={comments}
           handleEdit={this.handleEdit}
           handleVote={this.handleVote}
+          handleDelete={this.handleDelete}
           />
       </div>
     );
