@@ -6,12 +6,21 @@ class Comments extends Component {
     this.props.handleCommentVote(voteType, id);
   }
 
+  handleEdit = (comment) => {
+    this.props.handleCommentEdit(comment);
+  }
+
   render() {
     const { comments } = this.props;
     return (
       <div>
         {comments.map((comment) =>
-          <Comment key={comment.id} comment={comment} handleVote={this.handleVote}/>
+          <Comment
+            key={comment.id}
+            comment={comment}
+            handleVote={this.handleVote}
+            handleEdit={this.handleEdit}
+            />
         )}
       </div>
     )

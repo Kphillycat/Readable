@@ -5,14 +5,17 @@ import * as schema from './schema';
 
 export const RECEIVED_POSTS = 'RECEIVED_POSTS';
 export const ADD_POST_SUCCESS = 'ADD_POST_SUCCESS';
+export const EDIT_POST_SUCCESS = 'EDIT_POST_SUCCESS';
 export const SORT_POSTS = 'SORT_POSTS';
 export const RECEIVED_POSTS_BY_CATEGORY = 'RECEIVED_POSTS_BY_CATEGORY';
 export const EDIT_POST = 'EDIT_POST';
+export const EDIT_COMMENT = 'EDIT_COMMENT';
 export const RECEIVED_POST_DETAIL = 'RECEIVED_POST_DETAIL';
 export const RECEIVED_COMMENTS_SUCCESS = 'RECEIVED_COMMENTS_SUCCESS';
 export const RECEIVED_VOTED_POST = 'RECEIVED_VOTED_POST';
 export const SORT_COMMENTS = 'SORT_COMMENTS';
 export const ADD_COMMENT_SUCCESS = 'ADD_COMMENT_SUCCESS';
+export const EDIT_COMMENT_SUCCESS = 'EDIT_COMMENT_SUCCESS';
 export const RECEIVED_VOTED_COMMENT = 'RECEIVED_VOTED_COMMENT';
 export const RECEIVED_CATEGORIES = 'RECEIVED_CATEGORIES';
 export const DELETE_POST_SUCCESS = 'DELETE_POST_SUCCESS';
@@ -45,8 +48,19 @@ export const editingPost = (formData) => ({
   formData
 });
 
+export const editingComment = (formData) => ({
+  type: EDIT_COMMENT,
+  formData
+});
+
 export const addPostSuccess = (post) => ({
     type: ADD_POST_SUCCESS,
+    post,
+    normalized: normalize(post, schema.arrayOfPosts)
+})
+
+export const editPostSuccess = (post) => ({
+    type: EDIT_POST_SUCCESS,
     post,
     normalized: normalize(post, schema.arrayOfPosts)
 })
@@ -65,6 +79,12 @@ export const receivedCommentsSuccess = (comments) => ({
 
 export const addCommentSuccess = (comment) => ({
   type: ADD_COMMENT_SUCCESS,
+  comment,
+  normalized: normalize(comment, schema.comment)
+})
+
+export const editCommentSuccess = (comment) => ({
+  type: EDIT_COMMENT_SUCCESS,
   comment,
   normalized: normalize(comment, schema.comment)
 })
@@ -119,7 +139,7 @@ export const addPost = (post) => (dispatch) =>
 
 export const editPost = (post) => (dispatch) =>
   api.editPost(post, post.id).then((response) =>
-    dispatch(addPostSuccess(response))
+    dispatch(editPostSuccess(response))
   )
 
 export const getPostDetail = (id) => (dispatch) =>
@@ -137,10 +157,14 @@ export const voteOnPost = (voteType, id) => (dispatch) =>
     dispatch(receivedVotedPostSuccess(response))
   )
 
-
 export const addComment = (comment) => (dispatch) =>
   api.addComment(comment).then(response =>
     dispatch(addCommentSuccess(response))
+  )
+
+export const editComment = (comment, id) => (dispatch) =>
+  api.editComment(comment, id).then(response =>
+    dispatch(editCommentSuccess(response))
   )
 
 export const voteOnComment = (voteType, id) => (dispatch) =>

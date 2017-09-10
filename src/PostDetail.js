@@ -6,10 +6,9 @@ import * as actions from './actions';
 import orderBy from 'lodash.orderby';
 import SortControl from './SortControl';
 import Comments from './Comments';
-import { v4 } from 'uuid';
-import every from 'lodash.every';
 import { Link } from 'react-router-dom';
 import { getPostComments } from './utils';
+import CommentFormContainer from './CommentFormContainer';
 
 class PostDetail extends Component {
   state = {
@@ -30,28 +29,13 @@ class PostDetail extends Component {
     this.props.dispatch(actions.sortComments(sortByKey));
   }
 
-  handleSubmit = (event) => {
-    event.preventDefault();
-    let form = this.state;
-    form.id = v4();
-    form.parentId = this.props.state.postDetail.id;
-    form.timestamp = Date.now();
-    if(every(form)) {
-      this.props.dispatch(actions.addComment(form));
-    }
-  }
-
-  handleOnChange = (event) => {
-    const {value: fieldValue, id: field} = event.target;
-    let form = {};
-    form[field] = fieldValue;
-    this.setState(
-      form
-    );
-  }
-
   handleCommentVote = (voteType, commentId) => {
     this.props.dispatch(actions.voteOnComment(voteType, commentId));
+  }
+
+  handleCommentEdit = (comment) => {
+    this.props.dispatch(actions.editingComment(comment));
+    this.props.history.push('/comment/edit');
   }
 
   handlePostVote = (event) => {
@@ -77,26 +61,15 @@ class PostDetail extends Component {
         <button id="downVote" onClick={this.handlePostVote}>Down Vote</button>
         <h3>Comments</h3>
         <SortControl handleOnChange={this.handleSortOnChange} sortByKey={sortByKey.value}/>
-        <Comments comments={orderedComments} handleCommentVote={this.handleCommentVote}/>
+        <Comments
+          comments={orderedComments}
+          handleCommentVote={this.handleCommentVote}
+          handleCommentEdit={this.handleCommentEdit}
+          />
         {/** Add new comment **/}
-        <h3>Add New Comment</h3>
-        <form onSubmit={this.handleSubmit}>
-          <fieldset>
-            <label htmlFor="body">Body</label>
-            <input type="textarea" id="body"
-              value={this.state.body}
-              onChange={(e) => this.handleOnChange(e)}
-              ></input>
-          </fieldset>
-          <fieldset>
-            <label htmlFor="author">Author</label>
-            <input type="text" id="author"
-              value={this.state.author}
-              onChange={(e) => this.handleOnChange(e)}
-              ></input>
-          </fieldset>
-          <button>Add new Comment</button>
-        </form>
+        <CommentFormContainer
+          parentId={postDetail.id}
+          />
       </div>
     )
   }

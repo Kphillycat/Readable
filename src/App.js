@@ -6,6 +6,7 @@ import PostsListContainer from './PostsListContainer.js';
 import PostFormContainer from './PostFormContainer.js';
 import PostDetail from './PostDetail.js';
 import { connect } from 'react-redux';
+import CommentFormContainer from './CommentFormContainer.js';
 
 class App extends Component {
   render() {
@@ -39,6 +40,11 @@ class App extends Component {
                 history={history}
                 />}
           />
+        <Route path="/comment/edit" render={(history) =>
+            <CommentFormContainer
+              history={history}
+              />}
+        />
         </div>
       </BrowserRouter>
 

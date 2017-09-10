@@ -48,6 +48,7 @@ export const posts = (state = {}, action) => {
         postsById: {...state.postsById, ...action.normalized.entities.post}
       }
     case actions.ADD_POST_SUCCESS:
+    case actions.EDIT_POST_SUCCESS:
       return {
         postsById: {...state.postsById, ...action.normalized.entities.post}
       }
@@ -96,6 +97,8 @@ export const comments = (state = {}, action) => {
       return {...state, ...action.normalized.entities.comment};
     case actions.ADD_COMMENT_SUCCESS:
       return {...state, ...action.normalized.entities.comment};
+    case actions.EDIT_COMMENT_SUCCESS:
+      return {...state, ...action.normalized.entities.comment};
     case actions.RECEIVED_VOTED_COMMENT:
       return {...state, ...action.normalized.entities.comment};
     default:
@@ -107,6 +110,11 @@ export const formData = (state = {}, action) => {
   switch(action.type) {
     case actions.EDIT_POST:
       return {...state, ...action.formData}
+    case actions.EDIT_COMMENT:
+      return {...state, ...action.formData}
+    case actions.EDIT_COMMENT_SUCCESS:
+    case actions.EDIT_POST_SUCCESS:
+      return {}
     default:
       return state;
   }
