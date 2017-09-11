@@ -19,6 +19,7 @@ export const EDIT_COMMENT_SUCCESS = 'EDIT_COMMENT_SUCCESS';
 export const RECEIVED_VOTED_COMMENT = 'RECEIVED_VOTED_COMMENT';
 export const RECEIVED_CATEGORIES = 'RECEIVED_CATEGORIES';
 export const DELETE_POST_SUCCESS = 'DELETE_POST_SUCCESS';
+export const DELETE_COMMENT_SUCCESS = 'DELETE_COMMENT_SUCCESS';
 
 export const sortPosts = (sortByKey = DEFAULT_SORT_KEY) => ({
   type: SORT_POSTS,
@@ -98,6 +99,11 @@ export const receivedVotedPostSuccess = (post) => ({
 
 export const deletePostSuccess = (id) => ({
   type: DELETE_POST_SUCCESS,
+  id
+})
+
+export const deleteCommentSuccess = (id) => ({
+  type: DELETE_COMMENT_SUCCESS,
   id
 })
 
@@ -181,5 +187,12 @@ export const deletePost = (id) => (dispatch) =>
   api.deletePost(id).then(response => {
     if(response.status === 200) {
       dispatch(deletePostSuccess(id));
+    }
+  })
+
+export const deleteComment = (id) => (dispatch) =>
+  api.deleteComment(id).then(response => {
+    if(response.status === 200) {
+      dispatch(deleteCommentSuccess(id));
     }
   })

@@ -38,6 +38,10 @@ class PostDetail extends Component {
     this.props.history.push('/comment/edit');
   }
 
+  handleCommentDelete = (commentId) => {
+    this.props.dispatch(actions.deleteComment(commentId));
+  }
+
   handlePostVote = (event) => {
     const voteType = event.target.id;
     const postId = this.props.state.postDetail.id;
@@ -65,6 +69,7 @@ class PostDetail extends Component {
           comments={orderedComments}
           handleCommentVote={this.handleCommentVote}
           handleCommentEdit={this.handleCommentEdit}
+          handleCommentDelete={this.handleCommentDelete}
           />
         {/** Add new comment **/}
         <CommentFormContainer

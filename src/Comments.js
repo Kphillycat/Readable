@@ -10,6 +10,10 @@ class Comments extends Component {
     this.props.handleCommentEdit(comment);
   }
 
+  handleDelete = (id) => {
+    this.props.handleCommentDelete(id);
+  }
+
   render() {
     const { comments } = this.props;
     return (
@@ -20,6 +24,7 @@ class Comments extends Component {
             comment={comment}
             handleVote={this.handleVote}
             handleEdit={this.handleEdit}
+            handleDelete={this.handleDelete}
             />
         )}
       </div>

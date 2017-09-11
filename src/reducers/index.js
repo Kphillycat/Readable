@@ -1,6 +1,7 @@
 import * as actions from '../actions';
 import { DEFAULT_SORT_KEY } from '../constants';
 import filter from 'lodash.filter';
+import omit from 'lodash.omit';
 
 const initialSortByKey = {
   value: DEFAULT_SORT_KEY
@@ -101,6 +102,8 @@ export const comments = (state = {}, action) => {
       return {...state, ...action.normalized.entities.comment};
     case actions.RECEIVED_VOTED_COMMENT:
       return {...state, ...action.normalized.entities.comment};
+    case actions.DELETE_COMMENT_SUCCESS:
+      return omit(state, action.id)
     default:
       return state;
   }

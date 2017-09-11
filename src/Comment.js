@@ -11,6 +11,11 @@ class Comment extends Component {
     this.props.handleEdit(this.props.comment);
   }
 
+  handleDeleteClick = (event) => {
+    event.preventDefault();
+    this.props.handleDelete(this.props.comment.id);
+  }
+
   render(){
     const { comment } = this.props;
     return (
@@ -27,6 +32,8 @@ class Comment extends Component {
           <button onClick={this.handleVoteClick} id="downVote">DownVote</button>
           {/* Edit */}
           <button onClick={this.handleEditClick} id="edit">Edit</button>
+          {/* Delete */}
+          <button onClick={this.handleDeleteClick} id="delete">Delete</button>
       </div>
     );
   }
