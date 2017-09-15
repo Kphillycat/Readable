@@ -21,8 +21,8 @@ class PostsListContainer extends Component {
     }
   }
 
-  handleSortOnChange = (event) => {
-    const sortByKey = event.target.value;
+  handleSortOnChange = (event, index, value) => {
+    const sortByKey = value;
     this.props.dispatch(actions.sortPosts(sortByKey));
   }
 

@@ -8,6 +8,7 @@ import { categories, posts, postsByCategories, comments, sortByKey, formData, po
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import { createLogger } from 'redux-logger';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 const rootReducer = combineReducers({categories, posts, postsByCategories, comments, sortByKey, formData, postDetail});
 let middlewares = [thunk];
@@ -20,7 +21,9 @@ let store = createStore(rootReducer, applyMiddleware(...middlewares));
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <MuiThemeProvider>
+      <App />      
+    </MuiThemeProvider>
   </Provider>,
   document.getElementById('root')
 );

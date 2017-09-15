@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import RaisedButton from 'material-ui/RaisedButton';
+import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
 
 class PostPreview extends Component {
   handleClick = (event) => {
@@ -7,9 +9,8 @@ class PostPreview extends Component {
     this.props.handleEdit(this.props.post);
   }
 
-  handleVoteClick = (event) => {
-    event.preventDefault();
-    this.props.handleVote(event.target.id, this.props.post.id);
+  handleVoteClick = (voteType) => {
+    this.props.handleVote(voteType, this.props.post.id);
   }
 
   handleDeleteClick = (event) => {
@@ -20,36 +21,41 @@ class PostPreview extends Component {
   render() {
     const { post, commentNumbers } = this.props;
     return (
-      <div style={
-              {
-                border: "solid black 1px"
-              }
-            }>
-            <p>
-              {post.title}
-            </p>
-            <p>
-              {post.body.substring(0,30)}
-            </p>
-            <p>
-              Votes: {post.voteScore}
-            </p>
-            <p>
-              Date: {new Date(post.timestamp).toString()}
-            </p>
-            <p>
-              Category: {post.category}
-            </p>
-            <p>
-              Number of Comments: {commentNumbers}
-            </p>
-            <button onClick={this.handleDeleteClick}>Delete Post</button>
-            <button onClick={this.handleClick}>Edit Post</button>
-            <Link to={`/post/view/${post.id}`}>View Post</Link>
-            {/* Vote */}
-            <button onClick={this.handleVoteClick} id="upVote">UpVote</button>
-            <button onClick={this.handleVoteClick} id="downVote">DownVote</button>
-          </div>
+      <Card>
+        <CardHeader
+          title={post.title}
+          subtitle={`Votes: ${post.voteScore}, Date: ${new Date(post.timestamp).toString()},
+              Category: ${post.category}, Number of Comments: ${commentNumbers}`}
+          ></CardHeader>
+        <CardText>
+          {post.body.substring(0,30)}
+        </CardText>
+        <CardActions>
+          <RaisedButton
+            containerElement={ <Link to={`/post/view/${post.id}`}/> }
+            label="View Post"
+          />
+          {/* Voting */}
+          <RaisedButton
+            onClick={() => {this.handleVoteClick('upVote')}}
+            label="UpVote"
+          />
+          <RaisedButton
+            onClick={() => {this.handleVoteClick('downVote')}}
+            label="DownVote"
+          />
+          <RaisedButton
+            onClick={this.handleClick}
+            label="Edit Post"
+          />
+          {/* Delete Post */}
+          <RaisedButton
+            backgroundColor="red"
+            onClick={this.handleDeleteClick}
+            label="Delete Post"
+          />
+        </CardActions>
+      </Card>
     );
   }
 }
