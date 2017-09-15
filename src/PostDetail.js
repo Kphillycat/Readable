@@ -28,8 +28,8 @@ class PostDetail extends Component {
     this.props.dispatch(actions.fetchComments(this.props.postId));
   }
 
-  handleSortOnChange = (event) => {
-    const sortByKey = event.target.value;
+  handleSortOnChange = (event, index, value) => {
+    const sortByKey = value;
     this.props.dispatch(actions.sortComments(sortByKey));
   }
 
@@ -82,7 +82,7 @@ class PostDetail extends Component {
         </Card>
         {/* Comment */}
         <SortControl handleOnChange={this.handleSortOnChange} sortByKey={sortByKey.value}/>
-        <h3>Comments</h3>
+        <h2>Comments</h2>
         <Comments
           comments={orderedComments}
           handleCommentVote={this.handleCommentVote}

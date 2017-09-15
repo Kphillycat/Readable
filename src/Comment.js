@@ -3,8 +3,14 @@ import {Card, CardActions, CardTitle, CardText} from 'material-ui/Card';
 import ThumbUp from 'material-ui/svg-icons/action/thumb-up';
 import ThumbDown from 'material-ui/svg-icons/action/thumb-down';
 import RaisedButton from 'material-ui/RaisedButton';
+import FlatButton from 'material-ui/FlatButton';
+import Dialog from 'material-ui/Dialog';
 
 class Comment extends Component {
+  state = {
+    dialogOpen: false
+  };
+
   handleVoteClick = (voteType) => {
     this.props.handleVote(voteType, this.props.comment.id);
   }
@@ -14,6 +20,14 @@ class Comment extends Component {
     this.props.handleEdit(this.props.comment);
   }
 
+  deleteDialogOpen = () => {
+    this.setState({dialogOpen: true});
+  }
+
+  deleteDialogClose = () => {
+    this.setState({dialogOpen: false});
+  }
+
   handleDeleteClick = (event) => {
     event.preventDefault();
     this.props.handleDelete(this.props.comment.id);
@@ -21,11 +35,19 @@ class Comment extends Component {
 
   render(){
     const { comment } = this.props;
+    const actions = [
+      <FlatButton
+        label="Cancel"
+        onClick={this.deleteDialogClose}
+      />,
+      <FlatButton
+        label="Delete"
+        primary={true}
+        onClick={this.handleDeleteClick}
+      />
+    ];
     return (
-      <div style={{
-          border: "solid black 1px"
-        }}>
-
+      <div>
         <Card>
           <CardTitle
             title={`Commenter: ${comment.author}`}
@@ -54,9 +76,18 @@ class Comment extends Component {
             {/* Delete Comment */}
             <RaisedButton
               backgroundColor="red"
-              onClick={this.handleDeleteClick}
+              onClick={this.deleteDialogOpen}
               label="Delete Comment"
             />
+            {/* Delete confirmation modal */}
+            <Dialog
+              actions={actions}
+              modal={false}
+              open={this.state.dialogOpen}
+              onRequestClose={this.handleClose}
+            >
+              Are you sure you want to delete?
+            </Dialog>
           </CardActions>
         </Card>
       </div>

@@ -4,8 +4,14 @@ import RaisedButton from 'material-ui/RaisedButton';
 import {Card, CardActions, CardTitle, CardText} from 'material-ui/Card';
 import ThumbUp from 'material-ui/svg-icons/action/thumb-up';
 import ThumbDown from 'material-ui/svg-icons/action/thumb-down';
+import FlatButton from 'material-ui/FlatButton';
+import Dialog from 'material-ui/Dialog';
 
 class PostPreview extends Component {
+  state = {
+    dialogOpen: false
+  };
+
   handleClick = (event) => {
     event.preventDefault();
     this.props.handleEdit(this.props.post);
@@ -15,6 +21,14 @@ class PostPreview extends Component {
     this.props.handleVote(voteType, this.props.post.id);
   }
 
+  deleteDialogOpen = () => {
+    this.setState({dialogOpen: true});
+  }
+
+  deleteDialogClose = () => {
+    this.setState({dialogOpen: false});
+  }
+
   handleDeleteClick = (event) => {
     event.preventDefault();
     this.props.handleDelete(this.props.post.id);
@@ -22,6 +36,17 @@ class PostPreview extends Component {
 
   render() {
     const { post, commentNumbers } = this.props;
+    const actions = [
+      <FlatButton
+        label="Cancel"
+        onClick={this.deleteDialogClose}
+      />,
+      <FlatButton
+        label="Delete"
+        primary={true}
+        onClick={this.handleDeleteClick}
+      />
+    ];
     return (
       <Card>
         <CardTitle
@@ -55,9 +80,18 @@ class PostPreview extends Component {
           {/* Delete Post */}
           <RaisedButton
             backgroundColor="red"
-            onClick={this.handleDeleteClick}
+            onClick={this.deleteDialogOpen}
             label="Delete Post"
           />
+            {/* Delete confirmation modal */}
+            <Dialog
+              actions={actions}
+              modal={false}
+              open={this.state.dialogOpen}
+              onRequestClose={this.handleClose}
+            >
+            Are you sure you want to delete?
+          </Dialog>
         </CardActions>
       </Card>
     );

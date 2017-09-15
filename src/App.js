@@ -17,6 +17,7 @@ class App extends Component {
       <BrowserRouter>
         <div className="App">
           <AppBar
+            title="Readable"
             iconElementLeft={
               <IconButton containerElement={<Link to="/" />}>
                 <ActionHome />
