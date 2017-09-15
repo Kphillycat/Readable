@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import RaisedButton from 'material-ui/RaisedButton';
-import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
+import {Card, CardActions, CardTitle, CardText} from 'material-ui/Card';
 
 class PostPreview extends Component {
   handleClick = (event) => {
@@ -22,11 +22,11 @@ class PostPreview extends Component {
     const { post, commentNumbers } = this.props;
     return (
       <Card>
-        <CardHeader
+        <CardTitle
           title={post.title}
           subtitle={`Votes: ${post.voteScore}, Date: ${new Date(post.timestamp).toString()},
               Category: ${post.category}, Number of Comments: ${commentNumbers}`}
-          ></CardHeader>
+          ></CardTitle>
         <CardText>
           {post.body.substring(0,30)}
         </CardText>
