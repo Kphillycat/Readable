@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import RaisedButton from 'material-ui/RaisedButton';
 import {Card, CardActions, CardTitle, CardText} from 'material-ui/Card';
+import ThumbUp from 'material-ui/svg-icons/action/thumb-up';
+import ThumbDown from 'material-ui/svg-icons/action/thumb-down';
 
 class PostPreview extends Component {
   handleClick = (event) => {
@@ -24,7 +26,7 @@ class PostPreview extends Component {
       <Card>
         <CardTitle
           title={post.title}
-          subtitle={`Votes: ${post.voteScore}, Date: ${new Date(post.timestamp).toString()},
+          subtitle={`Author: ${post.author}, Votes: ${post.voteScore}, Date: ${new Date(post.timestamp).toString()},
               Category: ${post.category}, Number of Comments: ${commentNumbers}`}
           ></CardTitle>
         <CardText>
@@ -37,10 +39,12 @@ class PostPreview extends Component {
           />
           {/* Voting */}
           <RaisedButton
+            icon={<ThumbUp />}
             onClick={() => {this.handleVoteClick('upVote')}}
             label="UpVote"
           />
           <RaisedButton
+            icon={<ThumbDown />}
             onClick={() => {this.handleVoteClick('downVote')}}
             label="DownVote"
           />

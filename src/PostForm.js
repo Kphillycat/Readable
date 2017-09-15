@@ -7,7 +7,7 @@ import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import omit from 'lodash.omit';
 import RaisedButton from 'material-ui/RaisedButton';
-const errorText = 'This field is required';
+import { REQUIRED_FIELD_ERROR as errorText }  from './constants.js';
 
 class PostForm extends Component {
   state = {

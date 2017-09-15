@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
+import {Card, CardActions, CardTitle, CardText} from 'material-ui/Card';
+import ThumbUp from 'material-ui/svg-icons/action/thumb-up';
+import ThumbDown from 'material-ui/svg-icons/action/thumb-down';
+import RaisedButton from 'material-ui/RaisedButton';
 
 class Comment extends Component {
-  handleVoteClick = (event) => {
-    event.preventDefault();
-    this.props.handleVote(event.target.id, this.props.comment.id);
+  handleVoteClick = (voteType) => {
+    this.props.handleVote(voteType, this.props.comment.id);
   }
 
   handleEditClick = (event) => {
@@ -20,20 +23,42 @@ class Comment extends Component {
     const { comment } = this.props;
     return (
       <div style={{
-          listStyleType: "none",
           border: "solid black 1px"
         }}>
-          <p>Body: {comment.body}</p>
-          <p>Author: {comment.author} </p>
-          <p>Time: {new Date(comment.timestamp).toString()} </p>
-          <p>Vote Score: {comment.voteScore} </p>
-          {/* Vote */}
-          <button onClick={this.handleVoteClick} id="upVote">UpVote</button>
-          <button onClick={this.handleVoteClick} id="downVote">DownVote</button>
-          {/* Edit */}
-          <button onClick={this.handleEditClick} id="edit">Edit</button>
-          {/* Delete */}
-          <button onClick={this.handleDeleteClick} id="delete">Delete</button>
+
+        <Card>
+          <CardTitle
+            title={`Commenter: ${comment.author}`}
+            subtitle={`${comment.voteScore} Votes - Date: ${new Date(comment.timestamp).toString()}`}
+            ></CardTitle>
+          <CardText>
+            {comment.body}
+          </CardText>
+          <CardActions>
+            {/* Voting */}
+            <RaisedButton
+              icon={<ThumbUp />}
+              onClick={() => {this.handleVoteClick('upVote')}}
+              label="UpVote"
+            />
+            <RaisedButton
+              icon={<ThumbDown />}
+              onClick={() => {this.handleVoteClick('downVote')}}
+              label="DownVote"
+            />
+            {/* Edit Comment */}
+            <RaisedButton
+              onClick={this.handleEditClick}
+              label="Edit Comment"
+            />
+            {/* Delete Comment */}
+            <RaisedButton
+              backgroundColor="red"
+              onClick={this.handleDeleteClick}
+              label="Delete Comment"
+            />
+          </CardActions>
+        </Card>
       </div>
     );
   }

@@ -6,9 +6,13 @@ import * as actions from './actions';
 import orderBy from 'lodash.orderby';
 import SortControl from './SortControl';
 import Comments from './Comments';
-import { Link } from 'react-router-dom';
 import { getPostComments } from './utils';
 import CommentFormContainer from './CommentFormContainer';
+import RaisedButton from 'material-ui/RaisedButton';
+import {Card, CardActions, CardTitle, CardText} from 'material-ui/Card';
+import { getNumberOfCommentsOfPost } from './utils';
+import ThumbUp from 'material-ui/svg-icons/action/thumb-up';
+import ThumbDown from 'material-ui/svg-icons/action/thumb-down';
 
 class PostDetail extends Component {
   state = {
@@ -42,29 +46,43 @@ class PostDetail extends Component {
     this.props.dispatch(actions.deleteComment(commentId));
   }
 
-  handlePostVote = (event) => {
-    const voteType = event.target.id;
+  handlePostVote = (voteType) => {
     const postId = this.props.state.postDetail.id;
     this.props.dispatch(actions.voteOnPost(voteType, postId));
   }
 
   render () {
-    console.log('---- PostDetail ', this.props);
     const { postDetail, sortByKey } = this.props.state;
-    const { orderedComments } = this.props;
+    const { orderedComments, commentNumbers } = this.props;
     return (
       <div>
-        <Link to="/">Home</Link>
-        <h3>{postDetail.title}</h3>
-        <p>{postDetail.body}</p>
-        <p>Author: {postDetail.author}</p>
-        <p>Time: {new Date(postDetail.timestamp).toString()} </p>
-        <p>Vote Score: {postDetail.voteScore}</p>
-        {/** Voting **/}
-        <button id="upVote" onClick={this.handlePostVote}>Up Vote</button>
-        <button id="downVote" onClick={this.handlePostVote}>Down Vote</button>
-        <h3>Comments</h3>
+
+        <Card>
+          <CardTitle
+            title={postDetail.title}
+            subtitle={`Author: ${postDetail.author}, Votes: ${postDetail.voteScore}, Date: ${new Date(postDetail.timestamp).toString()},
+                Category: ${postDetail.category}, Number of Comments: ${commentNumbers}`}
+            ></CardTitle>
+          <CardText>
+            {postDetail.body}
+          </CardText>
+          <CardActions>
+            {/* Voting */}
+            <RaisedButton
+              icon={<ThumbUp />}
+              onClick={() => {this.handlePostVote('upVote')}}
+              label="UpVote"
+            />
+            <RaisedButton
+              icon={<ThumbDown />}
+              onClick={() => {this.handlePostVote('downVote')}}
+              label="DownVote"
+            />
+          </CardActions>
+        </Card>
+        {/* Comment */}
         <SortControl handleOnChange={this.handleSortOnChange} sortByKey={sortByKey.value}/>
+        <h3>Comments</h3>
         <Comments
           comments={orderedComments}
           handleCommentVote={this.handleCommentVote}
@@ -84,10 +102,12 @@ function mapStateToProps(state, routerParams) {
   const postId = get(routerParams, 'match.params.id');
   const commentsByPostId = getPostComments(state.comments, postId);
   const orderedComments = orderBy(commentsByPostId, state.sortByKey.value, ['desc']);
+  const commentNumbers = getNumberOfCommentsOfPost(orderedComments, postId);
   return {
     state,
     postId,
-    orderedComments
+    orderedComments,
+    commentNumbers
   }
 }
 
