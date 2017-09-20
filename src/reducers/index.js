@@ -1,6 +1,5 @@
 import * as actions from '../actions';
 import { DEFAULT_SORT_KEY } from '../constants';
-import filter from 'lodash.filter';
 import omit from 'lodash.omit';
 
 const initialSortByKey = {
@@ -59,7 +58,7 @@ export const posts = (state = {}, action) => {
       }
     case actions.DELETE_POST_SUCCESS:
       return {
-        postsById: filter(state.postsById, (post) => post.id !== action.id)
+        postsById: omit(state.postsById, action.id)
       }
     default:
       return state;

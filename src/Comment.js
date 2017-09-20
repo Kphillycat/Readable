@@ -5,6 +5,7 @@ import ThumbDown from 'material-ui/svg-icons/action/thumb-down';
 import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
 import Dialog from 'material-ui/Dialog';
+import { formatDate } from './utils';
 
 class Comment extends Component {
   state = {
@@ -50,8 +51,8 @@ class Comment extends Component {
       <div>
         <Card>
           <CardTitle
-            title={`Commenter: ${comment.author}`}
-            subtitle={`${comment.voteScore} Votes - Date: ${new Date(comment.timestamp).toString()}`}
+            title={`${comment.author} on ${formatDate(comment.timestamp)} Said:`}
+            subtitle={`${comment.voteScore} Votes`}
             ></CardTitle>
           <CardText>
             {comment.body}

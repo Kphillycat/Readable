@@ -11,7 +11,6 @@ const DEFAULT_FILTER = 'all';
 class PostsListContainer extends Component {
   componentDidMount() {
     this.props.dispatch(actions.fetchPosts(this.props.visibleCategory));
-    this.props.dispatch(actions.getCategories());
   }
 
   componentWillReceiveProps(nextProps) {
@@ -40,15 +39,13 @@ class PostsListContainer extends Component {
   }
 
   render() {
-    const { categories, sortByKey, comments } = this.props.state;
-    const { visibleCategory, orderedPosts } = this.props;
+    const { sortByKey, comments } = this.props.state;
+    const { orderedPosts } = this.props;
     return (
       <div>
         <SortControl sortByKey={sortByKey.value} handleOnChange={this.handleSortOnChange} />
         <PostsList
-          visibleCategory={visibleCategory}
           posts={orderedPosts}
-          categories={categories}
           comments={comments}
           handleEdit={this.handleEdit}
           handleVote={this.handleVote}
